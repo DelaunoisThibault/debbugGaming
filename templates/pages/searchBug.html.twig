@@ -1,0 +1,203 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <div class="page-heading">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4"></div>
+                <div class="col-lg-4">
+                    <div class="top-text header-text">
+                        <h2>Recherche Bugs</h2>
+                    </div>
+                </div>
+                <div class="col-lg-4"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="category-post">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="naccs">
+                        <div class="grid">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="menu">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="thumb">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="top-content">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+
+                                                            <form id="search-form" name="gs" method="submit" role="search" action="#">
+                                                                <div class="row searchFormPage searchFormSpaces">
+
+                                                                    <div class="col-lg-9 align-self-center">
+                                                                        <fieldset>
+                                                                            <input type="address" name="address" class="searchText" placeholder="Entrer votre recherche ici..." autocomplete="on" required>
+                                                                        </fieldset>
+                                                                    </div>
+
+                                                                    <div class="col-lg-3 arrangedBoxButtonSearchBug">
+                                                                        <fieldset>
+                                                                            <button class="main-button searchBugFormButton"><i class="fa fa-search"></i> Valider</button>
+                                                                        </fieldset>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-lg-1">
+                                                                        <h4>Filtrer :</h4>
+                                                                    </div>
+                                                                    <div class="col-lg-3 searchFormPage">
+                                                                        <fieldset>
+                                                                            <label for="severity">Sévérité :</label><br />
+                                                                            <select class="searchFormPage" name="severity" id="severity">
+                                                                                <option value="insignificant">Insignifiant</option>
+                                                                                <option value="small">Faible</option>
+                                                                                <option value="moderate">Modéré</option>
+                                                                                <option value ="strong">Fort</option>
+                                                                                <option value ="deadly/heavy">Jeux condamné/lourdement impacté</option>
+                                                                            </select>
+                                                                        </fieldset>
+                                                                    </div>
+                                                                    <div class="col-lg-3 searchFormPage">
+                                                                        <fieldset>
+                                                                            <label for="frequency">Fréquence :</label><br />
+                                                                            <select class="searchFormPage" name="frequency" id="frequency">
+                                                                                <option value="exceptionnal">Exceptionnel</option>
+                                                                                <option value="rare">Rare</option>
+                                                                                <option value="sometimes">Peu courant</option>
+                                                                                <option value ="often">Assez régulier</option>
+                                                                                <option value ="regulary">Fréquent</option>
+                                                                                <option value ="always">Systématique</option>
+                                                                            </select>
+                                                                        </fieldset>
+                                                                    </div>
+                                                                    <div class="col-lg-3 searchFormPage">
+                                                                        <fieldset>
+                                                                            <label for="gameBug">Jeu :</label><br />
+                                                                            <select class="searchFormPage" name="gameBug" id="gameBug">
+                                                                                <option value="skyrim">Skyrim</option>
+                                                                                <option value="AssassinsCreed3">Assassins Creed 3</option>
+                                                                                <option value="Fifa21">Fifa 2021</option>
+                                                                            </select>
+                                                                        </fieldset>
+                                                                    </div>
+                                                                    <div class="col-lg-2">
+                                                                        <input type="checkbox" id="solved" name="solved">
+                                                                        <label for="solved">Résolu ?</label>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="recent-listing recentListingDenied">
+                                        <div class="col-lg-12">
+                                            <div class="general-info">
+                                                <div class="item">
+                                                    <div class="row">
+                                                        <div class="col-lg-4">
+                                                            <div class="listing-item">
+                                                                <div class="left-image">
+                                                                    <a href="bugPage.html"><img src="assets/images/4975-dark-souls-bug.jpg" alt=""></a>
+                                                                </div>
+                                                                <div class="right-content align-self-center">
+                                                                    <a href="bugPage.html">
+                                                                        <h4>Bug trouvé</h4>
+                                                                    </a>
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ak incididunt ut labore et dolore magna aliqua.</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="listing-item">
+                                                                <div class="left-image">
+                                                                    <a href="bugPage.html"><img src="assets/images/02-SNAKE.jpg" alt=""></a>
+                                                                </div>
+                                                                <div class="right-content align-self-center">
+                                                                    <a href="bugPage.html">
+                                                                        <h4>Bug trouvé</h4>
+                                                                    </a>
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ak incididunt ut labore et dolore magna aliqua.</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="listing-item">
+                                                                <div class="left-image">
+                                                                    <a href="bugPage.html"><img src="assets/images/06-GIRAFFE-e1428672788656.gif" alt=""></a>
+                                                                </div>
+                                                                <div class="right-content align-self-center">
+                                                                    <a href="bugPage.html">
+                                                                        <h4>Bug trouvé</h4>
+                                                                    </a>
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ak incididunt ut labore et dolore magna aliqua.</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="listing-item">
+                                                                <div class="left-image">
+                                                                    <a href="bugPage.html"><img src="assets/images/8472099860_8f2192c54a_b.jpg" alt=""></a>
+                                                                </div>
+                                                                <div class="right-content align-self-center">
+                                                                    <a href="bugPage.html">
+                                                                        <h4>Bug trouvé</h4>
+                                                                    </a>
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ak incididunt ut labore et dolore magna aliqua.</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="listing-item">
+                                                                <div class="left-image">
+                                                                    <a href="bugPage.html"><img src="assets/images/divers-jeux-video-5195144b841cb.jpg" alt=""></a>
+                                                                </div>
+                                                                <div class="right-content align-self-center">
+                                                                    <a href="bugPage.html">
+                                                                        <h4>Bug trouvé</h4>
+                                                                    </a>
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ak incididunt ut labore et dolore magna aliqua.</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="listing-item">
+                                                                <div class="left-image">
+                                                                    <a href="bugPage.html"><img src="assets/images/lessims-1-1024x614.jpg" alt=""></a>
+                                                                </div>
+                                                                <div class="right-content align-self-center">
+                                                                    <a href="bugPage.html">
+                                                                        <h4>Bug trouvé</h4>
+                                                                    </a>
+                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ak incididunt ut labore et dolore magna aliqua.</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

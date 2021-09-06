@@ -1,0 +1,111 @@
+{% extends '../base.html.twig' %}
+ {% block content %}
+  <div class="page-heading">
+   <div class="container">
+    <div class="row">
+     <div class="col-lg-4"></div>
+     <div class="col-lg-4">
+      <div class="top-text header-text">
+       <h2>Admin</h2>
+      </div>
+     </div>
+     <div class="col-lg-4"></div>
+    </div>
+   </div>
+  </div>
+
+
+  <div class="container adminBox">
+   <div class="row">
+    <div class="col-lg-12">
+     <ul class="adminNav">
+      <li>
+       <a href="#">Bugs</a>
+      </li>
+      <li>
+       <a href="#">Résolution Bugs</a>
+      </li>
+      <li>
+       <a href="#">Solution Bugs</a>
+      </li>
+      <li>
+       <a href="#">Jeux</a>
+      </li>
+      <li>
+       <a href="#">Editeurs</a>
+      </li>
+      <li>
+       <a href="#">Messages contact</a>
+      </li>
+      <li>
+       <a href="#">Utilisateurs</a>
+      </li>
+      <li>
+       <a href="#">Commentaires</a>
+      </li>
+     </ul>
+    </div>
+   </div>
+
+   <div class="row">
+    <div class="col-g-12">
+     <h3>Titre table</h3>
+    </div>
+   </div>
+
+   <div class="row">
+    <div class="col-lg-12">
+     <table class="adminBox">
+      <thead class="thead-light">
+      <tr>
+       <th>Titre Bug</th>
+       <th>Sous-titre bug</th>
+       <th>Texte intro Bug</th>
+       <th>Image Bug</th>
+       <th>Sévérité Bug</th>
+       <th>Fréquence Bug</th>
+       <th>Texte Bug</th>
+       <th>Bug résolu</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+       <td>
+        Titre bug 01
+       </td>
+       <td>Sous-titre bug 01</td>
+       <td>Texte intro bug 01</td>
+       <td><img src="assets/images/4975-dark-souls-bug.jpg" alt=""></td>
+       <td>Modéré</td>
+       <td>Peu courant</td>
+       <td>Ouvrez-moi bien vite, nous ordonne-t-il. Vers l'époque et le lieu rappelait la funèbre salle à manger s'ouvrit d'elle-même, plus féconde ? Infligé par la vie dans une fosse assez profonde pour que se gèlent complètement les
+        circuits de distribution. Pâtisserie et littérature mêlées, cela s'entend d'une pleine et entière si j'entrevoyais une nouvelle occasion de reproches. Celles d'une femmelette, pas un traître liard. Mauvaises relations de
+        la vie universitaire l'avait toujours guidée, sauvée. Suivant les pas que vous étiez la plus belle voix de bronze, dans la loge ; sans doute d'aller plus d'un lecteur. Effrayé des grands et du peuple qu'il avait su conserver
+        sa colonne en bon ordre.</td>
+       <td>Non</td>
+       <td><button>Modifier</button></td>
+       <td><button>Supprimer</button></td>
+      </tr>
+      <tr>
+       <td>
+        Titre bug 02
+       </td>
+       <td>Sous-titre bug 02</td>
+       <td>Texte intro bug 02</td>
+       <td><img src="assets/images/divers-jeux-video-5195144b841cb.jpg" alt=""></td>
+       <td>Faible</td>
+       <td>Peu courant</td>
+       <td>Effrayé des grands et du peuple qu'il avait su conserver sa colonne en bon ordre. Féru d'enthousiasme pour lui, ce n'aurait pas réussi. Affectant un grand mépris lui venait de se vider. Dit le vieillard en sentait la pleine
+        réalité s'épandre en lui. Toi aussi tu es en présence de sa fiancée. Achever de distribuer les vivres par tête de soldat, et que ma langue parlait autant que mes forces physiques étaient presque épuisées. Car elle te croit
+        mort, mort ! Remettez le reste de vos jours. Ciré noir, frétillante de reflets, surmontée d'une pierre ponce, il y vivrait de sa vie ?</td>
+       <td>Non</td>
+       <td><button>Modifier</button></td>
+       <td><button>Supprimer</button></td>
+      </tr>
+      </tbody>
+     </table>
+     <button>Créer un nouvel article</button>
+    </div>
+   </div>
+  </div>
+ {% endblock %}

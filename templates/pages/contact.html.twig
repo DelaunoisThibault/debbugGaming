@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+ {% block content %}
+  <div class="page-heading">
+   <div class="container">
+    <div class="row">
+     <div class="col-lg-8">
+      <div class="top-text header-text">
+       <h2>Nous contacter</h2>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+
+  <div class="contact-page">
+   <div class="container">
+    <div class="row">
+     <div class="col-lg-12">
+      <div class="inner-content">
+       <div class="row connectInscript">
+        <p>Pour toute question à propos du site ou pour une demande particulière, vous pouvez nous contacter par les moyens suivants :</p>
+        <p>Téléphone : 0445 56 88 59</br>
+         Mail : thibaultdelaunois@gmail.com
+        </p>
+       </div>
+       <div class="row connectInscript">
+        <p>Vous pouvez aussi nous contacter via ce formulaire :</p>
+        <form id="search-form" class="limitPadding" name="gs" method="submit" role="search" action="#">
+         <div class="row searchFormPage">
+          <fieldset>
+           <label for="email">Adresse email :</label>
+           <input class="searchText contactEmailInput" type="email" name="email" required>
+           <label for="contactText">Votre message :</label>
+           <textarea id="contactText" class="textareaBugCreation" name="contactText" required></textarea>
+           <button class="main-button bugInsideFormSpaces"> Envoyer</button>
+          </fieldset>
+         </div>
+        </form>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ {% endblock %}

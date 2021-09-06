@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <div class="page-heading">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="top-text header-text">
+                        <h2>Profil</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="inner-content">
+                        <div class="row connectInscript">
+                            <div class="col-lg-4">
+                                <img src="assets/images/user_icon.png" alt="">
+                                <form id="changeProfile-form" name="gs" method="submit" role="search" action="#">
+                                    <fieldset>
+                                        <button class="main-button">Modifier</button>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div class="col-lg-8">
+                                <p>Nom de compte : Utilisateur</p>
+                                <p>Adresse e-mail : adresse@gmail.com</p>
+                                <p>Bloqué : Non</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
