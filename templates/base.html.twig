@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,13 +10,13 @@
             <link rel="preconnect" href="https://fonts.gstatic.com">
             <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
             <!-- Bootstrap core CSS -->
-            <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+            <link href="{{ 'vendor/bootstrap/css/bootstrap.min.css' }}" rel="stylesheet">
             <!-- Additional CSS Files -->
-            <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.css') }}">
-            <link rel="stylesheet" href="{{ asset('assets/css/templatemo-plot-listing.css') }}">
-            <link rel="stylesheet" href="{{ asset('assets/css/animated.css') }}">
-            <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
-            {{ encore_entry_link_tags('app') }}
+            <link rel="stylesheet" href="{{ 'assets/css/fontawesome.css' }}">
+            <link rel="stylesheet" href="{{ 'assets/css/templatemo-plot-listing.css' }}">
+            <link rel="stylesheet" href="{{ 'assets/css/animated.css' }}">
+            <link rel="stylesheet" href="{{ 'assets/css/owl.css' }}">
+
         {% endblock %}
         <script src="https://kit.fontawesome.com/53244cad5b.js" crossorigin="anonymous"></script>
 
@@ -52,7 +52,7 @@
                                         <li><a href="{{ path('bugCreationPage') }}">Proposer un bug</a></li>
                                         <li>
                                             <div class="navSearchBar col-lg-12">
-                                                <form id="search-form" class="navSearchForm" name="gs" method="submit" role="search" action="#">
+                                                <form id="search-form" class="navSearchForm" name="gs" method="POST" role="search" action="#">
                                                     <div class="row">
 
                                                         <div class="col-lg-8 align-self-center">
@@ -122,13 +122,13 @@
             {% endblock %}
         {% endblock %}
         {% block javascripts %}
-            <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-            <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-            <script src="{{ asset('assets/js/owl-carousel.js') }}"></script>
-            <script src="{{ asset('assets/js/animation.js') }}"></script>
-            <script src="{{ asset('assets/js/imagesloaded.js') }}"></script>
-            <script src="{{ asset('assets/js/custom.js') }}"></script>
-            {{ encore_entry_script_tags('app') }}
+            <script src="{{ 'vendor/jquery/jquery.min.js' }}"></script>
+            <script src="{{ 'vendor/bootstrap/js/bootstrap.bundle.min.js' }}"></script>
+            <script src="{{ 'assets/js/owl-carousel.js' }}"></script>
+            <script src="{{ 'assets/js/animation.js' }}"></script>
+            <script src="{{ 'assets/js/imagesloaded.js' }}"></script>
+            <script src="{{ 'assets/js/custom.js' }}"></script>
+
         {% endblock %}
     </body>
 </html>

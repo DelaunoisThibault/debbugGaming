@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
+
     /**
      * page d'inscription
      * @Route("/registration", name="registrationPage")
