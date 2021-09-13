@@ -14,8 +14,6 @@ class CommentFormType extends AbstractType
         $builder
             ->add('textComments')
             ->add('date')
-            ->add('idUser')
-            ->add('idBug')
         ;
     }
 

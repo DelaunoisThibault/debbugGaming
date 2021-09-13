@@ -15,7 +15,6 @@ class BugFixFormType extends AbstractType
             ->add('resolved')
             ->add('majNumber')
             ->add('dateBugFix')
-            ->add('idBug')
         ;
     }
 

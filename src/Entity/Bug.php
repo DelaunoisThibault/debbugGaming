@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Bug
 {
+    const SEVERITY = ['Insignifiant', 'Faible', 'Modéré', 'Fort', 'Jeux condamné/lourdement impacté'];
+    const FREQUENCY = ['Exceptionnel', 'Rare', 'Peu courant', 'Assez régulier', 'Fréquent', 'Systématique'];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -58,11 +61,13 @@ class Bug
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Choice(choices=Bug::SEVERITY, message="La sévérité choisie est invalide ou n'existe pas")
      */
     private $severityBug;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Choice(choices=Bug::FREQUENCY, message="La fréquence choisie est invalide ou n'existe pas")
      */
     private $frequencyBug;
 

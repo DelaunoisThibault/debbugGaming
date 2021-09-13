@@ -11,8 +11,8 @@ class BugController extends AbstractController
 {
     /**
      * page de création bug
-     * @Route("/admin/bug/new", name="bugCreationPage")
-     * @Route("/admin/bug/update/{id<\d+>}", name="bugUpdatePage")
+     * @Route("/bug/new", name="bugCreationPage")
+     * @Route("/bug/update/{id<\d+>}", name="bugUpdatePage")
      */
     public function bugForm(): Response
     {

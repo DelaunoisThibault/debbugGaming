@@ -5,7 +5,7 @@
              <div class="col-lg-12">
                  <div class="top-text header-text">
                      <h2>Debug Gaming</h2>
-                     <img class="welcomeImg" src="assets/images/work.png" alt="">
+                     <img class="welcomeImg" src="{{ asset('assets/images/work.png') }}" alt="">
                  </div>
              </div>
          </div>
@@ -43,60 +43,32 @@
                      <div class="owl-carousel owl-listing">
                          <div class="item">
                              <div class="row">
+                                 {% for listBugs in listBugs %}
                                  <div class="col-lg-4">
                                      <div class="listing-item">
                                          <div class="left-image">
-                                             <a href="{{ path('bugPage') }}"><img src="assets/images/4975-dark-souls-bug.jpg" alt=""></a>
+                                             <a href="{{ path('bugPage', {'id': listBugs.id}) }}"><img src="{{ asset('assets/images/' ~listBugs.descriptionImgBug ) }}" alt=""></a>
                                          </div>
                                          <div class="right-content align-self-center">
-                                             <a href="{{ path('bugPage') }}">
-                                                 <h4>Titre bug 01</h4>
+                                             <a href="{{ path('bugPage', {'id': listBugs.id}) }}">
+                                                 <h4>{{ listBugs.titleBug }}</h4>
                                              </a>
-                                             <h6>Lorem ipsum pour décorer</h6>
+                                             <h6>{{ listBugs.subtitleBug }}</h6>
                                          </div>
                                      </div>
                                  </div>
-                                 <div class="col-lg-4">
-                                     <div class="listing-item">
-                                         <div class="left-image">
-                                             <a href="{{ path('bugPage') }}"><img src="assets/images/02-SNAKE.jpg" alt=""></a>
-                                         </div>
-                                         <div class="right-content align-self-center">
-                                             <a href="{{ path('bugPage') }}">
-                                                 <h4>Titre bug 02</h4>
-                                             </a>
-                                             <h6>Lorem ipsum pour décorer</h6>
-                                         </div>
-                                     </div>
-                                 </div>
-                                 <div class="col-lg-4">
-                                     <div class="listing-item">
-                                         <div class="left-image">
-                                             <a href="{{ path('bugPage') }}"><img src="assets/images/06-GIRAFFE-e1428672788656.gif" alt=""></a>
-                                         </div>
-                                         <div class="right-content align-self-center">
-                                             <a href="{{ path('bugPage') }}">
-                                                 <h4>Titre bug 03</h4>
-                                             </a>
-                                             <h6>Lorem ipsum pour décorer</h6>
-                                         </div>
-                                     </div>
-                                 </div>
+                                 {% endfor %}
                              </div>
                          </div>
                      </div>
-
-
                  </div>
                  <div class="col-lg-4"></div>
                  <div class="col-lg-4">
                      <div class="nav-links">
-                         <span class="page-numbers current">1</span>
-                         <a class="page-numbers" href="#">2</a>
-                         <a class="page-numbers" href="#">3</a>
-                         <a class="page-numbers" href="#">4</a>
-                         <a class="page-numbers" href="#">5</a>
-                         <a class="page-numbers" href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                         {% for i in 1..(listBugs.totalItemCount/listBugs.itemNumberPerPage + 1) | round(0, 'floor') %}
+                             <a class="page-numbers {{   i == app.request.get('page') ? 'current' : '' }}"
+                                href="{{ url(app.request.get('_route'), app.request.query.all() | merge({page: i}) ) }}">{{ i }}</a>
+                         {% endfor %}
                      </div>
                  </div>
                  <div class="col-lg-4"></div>

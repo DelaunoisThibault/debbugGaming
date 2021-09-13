@@ -14,7 +14,6 @@ class BugSolutionFormType extends AbstractType
         $builder
             ->add('textBugSolution')
             ->add('imgBugSolution')
-            ->add('idBug')
         ;
     }
 

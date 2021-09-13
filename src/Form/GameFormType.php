@@ -15,7 +15,6 @@ class GameFormType extends AbstractType
             ->add('nameGame')
             ->add('yearOfPublication')
             ->add('bugRating')
-            ->add('idEditor')
         ;
     }
 

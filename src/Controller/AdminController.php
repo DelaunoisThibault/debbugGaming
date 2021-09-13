@@ -11,7 +11,7 @@ class AdminController extends AbstractController
 {
     /**
      * page de gestion admin
-     * @Route("/admin/gestion/bugs", name="adminGestionBugsPage")
+     * @Route("/gestion/bugs", name="adminGestionBugsPage")
      */
     public function adminActionsBugs(): Response
     {

@@ -21,6 +21,7 @@
       <div class="naccs">
        <div class="grid">
         <div class="row">
+         {{ form_start(editorForm) }}
          <form id="search-form" name="sB" method="submit" role="search" action="#">
           <div class="row">
 
@@ -28,8 +29,7 @@
            <div class="col-lg-12 bugFormSpaces">
             <fieldset>
              <div class="col-lg-12 bugInsideFormSpaces">
-              <label for="editorName">Nom de l'éditeur :</label>
-              <input type="text" class="inputBugForm" name="editorName" required>
+              {{ form_row(editorForm.editorName, {'label':'Nom de l\'éditeur :'}) }}
              </div>
 
             </fieldset>
@@ -43,6 +43,7 @@
 
           </div>
          </form>
+         {{ form_end(editorForm) }}
         </div>
        </div>
       </div>

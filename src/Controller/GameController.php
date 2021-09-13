@@ -11,8 +11,8 @@ class GameController extends AbstractController
 {
     /**
      * page de création de jeu
-     * @Route("/admin/game/new", name="gameCreationPage")
-     * @Route("/admin/game/update/{id<\d+>}", name="gameUpdatePage")
+     * @Route("/game/new", name="gameCreationPage")
+     * @Route("/game/update/{id<\d+>}", name="gameUpdatePage")
      */
     public function gameForm(): Response
     {

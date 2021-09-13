@@ -20,8 +20,6 @@ class BugFormType extends AbstractType
             ->add('severityBug')
             ->add('frequencyBug')
             ->add('published')
-            ->add('idGame')
-            ->add('idUser')
         ;
     }
 

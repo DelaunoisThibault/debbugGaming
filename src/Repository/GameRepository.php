@@ -19,6 +19,16 @@ class GameRepository extends ServiceEntityRepository
         parent::__construct($registry, Game::class);
     }
 
+    public function findByBugId($bugs): ?Game
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.bugs = :val')
+            ->setParameter('val', $bugs)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
     // /**
     //  * @return Game[] Returns an array of Game objects
     //  */

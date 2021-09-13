@@ -2,6 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
+use App\Form\CommentFormType;
+use App\Repository\BugRepository;
+use App\Repository\CommentRepository;
+use App\Repository\EditorRepository;
+use App\Repository\GameRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,10 +21,17 @@ class GeneralController extends AbstractController
      * page d'accueil
      * @Route("/", name="homePage")
      */
-    public function home(): Response
+    public function home(BugRepository $bugRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $bugs = $bugRepository->findAllByRecent();
+        $bugs = $paginator->paginate(
+            $bugs,
+            $request->query->getInt('page', 1),
+            3
+        );
         return $this->render('pages/index.html.twig', [
-            'pageTitle' => 'Accueil'
+            'pageTitle' => 'Accueil',
+            'listBugs' => $bugs
         ]);
     }
 
@@ -33,18 +48,45 @@ class GeneralController extends AbstractController
 
     /**
      * page de bug
-     * @Route("/bugPage", name="bugPage")
+     * @Route("/bug/{id<\d+>}", name="bugPage")
      */
-    public function bugPage(): Response
+    public function bugPage($id, Request $request, CommentRepository $commentsRepo, BugRepository $bugRepository,
+                            GameRepository $gameRepository, EditorRepository $editorRepository, EntityManagerInterface $manager): Response
     {
+        $bug = $bugRepository->find($id);
+        $game = $gameRepository->findByBugId($id);
+        $editor =$editorRepository->find($game->getIdEditor());
+        $allComments = $commentsRepo->findByBugId($id);
+        $comment = new Comment();
+        $commentsForm = $this->createForm(CommentFormType::class, $comment);
+        $commentsForm->handleRequest($request);
+        if($commentsForm->isSubmitted() && $commentsForm->isValid()){
+            /** @var \App\Entity\User $user */
+            $user = $this->getUser();
+            $comment->setDate(new \DateTime())
+                ->setIdBug($bug)
+                ->setIdUser($user);
+
+            $manager->persist($comment);
+            $manager->flush();
+            return $this->redirectToRoute('articlePage',[
+                'id'=> $bug->getId()
+            ]);
+        }
+
         return $this->render('pages/bugPage.html.twig', [
-            'pageTitle' => 'Page du bug'
+            'pageTitle' => 'Page du bug',
+            'bug' => $bug,
+            'game' => $game,
+            'editor' => $editor,
+            'comments' => $allComments,
+            'commentsForm' => $commentsForm->createView()
         ]);
     }
 
     /**
      * page de contact
-     * @Route("/contactPage", name="contactPage")
+     * @Route("/contact", name="contactPage")
      */
     public function contactPage(): Response
     {

@@ -19,6 +19,17 @@ class BugRepository extends ServiceEntityRepository
         parent::__construct($registry, Bug::class);
     }
 
+    /**
+     * @return \Doctrine\ORM\Query
+     */
+    public function findAllByRecent(){
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.id', 'DESC')
+            ->getQuery()
+            ;
+    }
+
+
     // /**
     //  * @return Bug[] Returns an array of Bug objects
     //  */
