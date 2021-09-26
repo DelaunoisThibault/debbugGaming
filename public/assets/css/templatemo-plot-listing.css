@@ -84,7 +84,7 @@ font & reset css
 @font-face {
     font-family: 'robotoregular';
     src: url('../fonts/Roboto-Regular-webfont.eot');
-    src: url('../fonts/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/Roboto-Regular-webfont.woff2') format('woff2'), url('../fonts/Roboto-Regular-webfont.woff') format('woff'), url('../fonts/Roboto-Regular-webfont.ttf') format('truetype'), url('../fonts/Roboto-Regular-webfont.svg#robotoregular') format('svg');
+    src: url('../fonts/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/Roboto-Regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -1181,6 +1181,13 @@ Popular Categories
     text-align: center;
 }
 
+.goodChecked {
+    color : green;
+}
+
+.badChecked {
+    color : red;
+}
 
 /*
 ---------------------------------------------

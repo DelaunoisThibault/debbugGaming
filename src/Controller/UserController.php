@@ -2,10 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class UserController extends AbstractController
 {
@@ -14,10 +18,27 @@ class UserController extends AbstractController
      * page d'inscription
      * @Route("/registration", name="registrationPage")
      */
-    public function newUser(): Response
+    public function newUser(Request $request, UserPasswordEncoderInterface $userEncoder): Response
     {
+        $newUser = new User();
+        $newUser->setRoles(['ROLE_USER'])
+            ->setLocked(false)
+            ->setAvatar('user_icon.png');
+        $userForm = $this->createForm(RegistrationFormType::class, $newUser);
+        $userForm->handleRequest($request);
+        if($userForm->isSubmitted() && $userForm->isValid()){
+            $entityManager = $this->getDoctrine()->getManager();
+            $hash = $userEncoder->encodePassword($newUser, $newUser->getPassword());
+            $newUser->setPassword($hash);
+
+            $entityManager->persist($newUser);
+            $entityManager->flush();
+            return $this->redirectToRoute('connectionPage', []);
+        }
+
         return $this->render('pages/inscription.html.twig', [
-            'pageTitle' => 'Inscription'
+            'pageTitle' => 'Inscription',
+            'userForm' => $userForm->createView()
         ]);
     }
 
@@ -25,11 +46,24 @@ class UserController extends AbstractController
      * page de connexion
      * @Route("/connection", name="connectionPage")
      */
-    public function connexion(): Response
+    public function connection(AuthenticationUtils $authenticationUtils): Response
     {
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+
         return $this->render('pages/connection.html.twig', [
-            'pageTitle' => 'Connexion'
+            'pageTitle' => 'Connexion',
+            'last_username' => $lastUsername,
+            'error' => $error
         ]);
+    }
+
+    /**
+     * @Route("/logout", name="app_logout")
+     */
+    public function logout()
+    {
+
     }
 
     /**

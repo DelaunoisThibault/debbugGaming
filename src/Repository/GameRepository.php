@@ -29,6 +29,13 @@ class GameRepository extends ServiceEntityRepository
             ;
     }
 
+    public function findAllBugFromSingleGame(){
+
+        /*$query = $em->createQuery('SELECT u, p FROM Game u JOIN u.Bug p');
+        $game = $query->getResult(); // array of CmsUser objects with the phonenumbers association loaded
+        $numberOfBugs = $this->count($game);*/
+    }
+
     // /**
     //  * @return Game[] Returns an array of Game objects
     //  */

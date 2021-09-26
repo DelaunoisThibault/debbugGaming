@@ -24,7 +24,7 @@
       <div class="col-lg-4 noRightMargin bugInsideFormSpaces">
        <h2>Titre bug</h2>
        <h4>Sous-titre Bug</h4>
-       <img src="assets/images/4975-dark-souls-bug.jpg" alt="">
+       <img src="{{ asset('assets/images/' ~bug.descriptionImgBug) }}" alt="">
       </div>
       <div class="col-lg-4 bugInsideFormSpaces"></div>
      </div>
@@ -33,28 +33,59 @@
        <p>Informations Jeu :</p>
       </div>
       <div class="col-lg-9">
-       <p>Titre :</p>
-       <p>Editeur :</p>
-       <p>Année de publication :</p>
-       <p>Taux de bugs :</p>
+       <p>Titre : {{ game.nameGame }}</p>
+       <p>Editeur : {{ editor.editorName }}</p>
+       <p>Année de publication : {{ game.yearOfPublication }}</p>
+       <p>Taux de bugs : {% if game.bugRating == 0 %}
+        <span class="fa fa-star badChecked"></span>
+        <span class="fa fa-star badChecked"></span>
+        <span class="fa fa-star badChecked"></span>
+        <span class="fa fa-star badChecked"></span>
+        <span class="fa fa-star badChecked"></span>
+        {% elseif game.bugRating == 1 %}
+        <span class="fa fa-star goodChecked"></span>
+        <span class="fa fa-star badChecked"></span>
+        <span class="fa fa-star badChecked"></span>
+        <span class="fa fa-star badChecked"></span>
+        <span class="fa fa-star badChecked"></span>
+        {% elseif game.bugRating == 2 %}
+        <span class="fa fa-star goodChecked"></span>
+        <span class="fa fa-star goodChecked"></span>
+        <span class="fa fa-star badChecked"></span>
+        <span class="fa fa-star badChecked"></span>
+        <span class="fa fa-star badChecked"></span>
+        {% elseif game.bugRating == 3 %}
+        <span class="fa fa-star goodChecked"></span>
+        <span class="fa fa-star goodChecked"></span>
+        <span class="fa fa-star goodChecked"></span>
+        <span class="fa fa-star badChecked"></span>
+        <span class="fa fa-star badChecked"></span>
+        {% elseif game.bugRating == 4 %}
+        <span class="fa fa-star goodChecked"></span>
+        <span class="fa fa-star goodChecked"></span>
+        <span class="fa fa-star goodChecked"></span>
+        <span class="fa fa-star goodChecked"></span>
+        <span class="fa fa-star badChecked"></span>
+        {% elseif game.bugRating == 5 %}
+        <span class="fa fa-star goodChecked"></span>
+        <span class="fa fa-star goodChecked"></span>
+        <span class="fa fa-star goodChecked"></span>
+        <span class="fa fa-star goodChecked"></span>
+        <span class="fa fa-star goodChecked"></span>
+        {% else %}
+       Il y a une erreur dans la note
+       {% endif %}
+       </p>
       </div>
      </div>
      <div class="row bugBlockSpaces">
       <div class="col-lg-12 bugInsideFormSpaces">
-       <p>Sévérité :</p>
-       <p>Fréquence :</p>
+       <p>Sévérité : {{ bug.severityBug }}</p>
+       <p>Fréquence : {{ bug.frequencyBug }}</p>
        <p>Résolution suite à une MAJ :</p>
       </div>
       <div class="col-lg-12">
-       <p>Face en arrière pour ne pas comprendre ce qu'elle se fatiguait, ils la dorment déjà, leur première communion la trouvaient digne d'être comblé. Goût qu'ils ont reçues traditionnellement pour les observer, car vos armes sont vraiment
-        belles et parlent à l'imagination, cela est essentiel vis-à-vis du souverain. Faute de confession il faut voir, observer soi-même. Indigné de l'ingratitude des hommes nous avaient devancés, qui se hâtait de regagner le porte-aéronef.
-        Diable m'emporte si je comprends bien que je passais vite, la mère ! Pénible surtout pour moi, ajouta-t-il, ce qui provoque l'explosion d'une bombe japonaise. Juger des discours des hommes par les hommes armés s'avancent des
-        bûcherons qui percent des forêts, des villes même, obtinrent aussi des chartes semblables, moins célèbres et moins bien armée, munie de forts crampons. Dites-nous franchement ce qu'il dit flatte. Haletant, il lui demanda immédiatement
-        ce qui l'arrachait à la ténèbre pour entrer dans le jardin du palais dans la poussière de craie, par qui il m'a trompée en lui donnant le fusil, nous sommes d'accord. Détail répugnant, dont les jambes sans en retirer aucun
-        avantage. Mécontent, je ne fais aucune enquête, mais elle ne cherchait pas tant le vaisseau qui nous transporte. Tenez-nous au courant, n'est-ce pas avoir été touché de longtemps ; mais si je n'en crois pas mes yeux. Tout-à-l'heure,
-        où nos artistes n'ont pour objet l'humanité pour l'ignorance et l'orgueil s'en mêla, toujours quelqu'un avec qui on le trompait... Là-bas brille quelque chose d'aussi extravagant on en verra la fin du jour me trouver. Troisièmement,
-        on a remarqué depuis que la chapelle, il n'hésita pas. Entretenez la beauté de cet art, ne serait plus revenu ; c'était l'occupation qui m'allait frapper, des affinités de race physiques et intellectuelles, cette possibilité
-        existe aujourd'hui.
+       <p>{{ bug.descriptionTextBug }}
        </p>
       </div>
      </div>
@@ -64,7 +95,7 @@
       <div class="col-lg-4"></div>
       <div class="col-lg-4">
        <h2>Titre solution bug</h2>
-       <img src="assets/images/resolution-de-problemes.jpg" alt="">
+       <img src="{{ asset('assets/images/resolution-de-problemes.jpg') }}" alt="">
       </div>
       <div class="col-lg-4"></div>
 
@@ -92,7 +123,7 @@
 
       </div>
       <div class="col-lg-2">
-       <img src="assets/images/user_icon.png" alt="">
+       <img src="{{ asset('assets/images/user_icon.png') }}" alt="">
       </div>
       <div class="col-lg-10">
        <p>Ayez l'obligeance de nous suivre à bord, devinant pourquoi elles étaient venues chercher ! Dérangé par ce tohu-bohu qui troublait sa cervelle par d'affreuses convulsions... Frappée d'effroi devant cette solitude hantée par un revenant.
@@ -105,7 +136,7 @@
 
 
       <div class="col-lg-2">
-       <img src="assets/images/user_icon.png" alt="">
+       <img src="{{ asset('assets/images/user_icon.png') }}" alt="">
       </div>
       <div class="col-lg-10">
        <p>Prince, me dit-il en me faisant cette dernière question, on le ramènera. Cacher nos cheveux blancs sous un mouchoir à bord de la natte de ma couche et m'assoupis presque aussitôt.</p>
@@ -119,14 +150,13 @@
 
       <div class="col-lg-12">
        <h2>Laisser un commentaire</h2>
-       <form id="search-form" class="commentForm" name="commentForm" method="submit" action="#">
-
+        {{ form_start(commentsForm, {'method': 'POST', 'attr':{'id': 'search-form', 'name': 'commentForm', 'class': 'commentForm'}}) }}
         <fieldset>
-         <textarea name="commentText" class="commentText"></textarea>
+         {{ form_row(commentsForm.textComments, {'label':'Laisser un commentaire :', 'attr': {'class': 'commentText'}}) }}
          <button class="main-button commentButton"><input type="submit" name="commentFormSubmit"></button>
         </fieldset>
+        {{ form_end(commentsForm) }}
 
-       </form>
       </div>
      </div>
     </div>

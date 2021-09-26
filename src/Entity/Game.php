@@ -31,7 +31,7 @@ class Game
     private $yearOfPublication;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      * @Assert\Range(
      *     min=0,
      *     max=5,

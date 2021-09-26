@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Editor;
 use App\Entity\Game;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,7 +16,10 @@ class GameFormType extends AbstractType
         $builder
             ->add('nameGame')
             ->add('yearOfPublication')
-            ->add('bugRating')
+            ->add('idEditor', EntityType::class, [
+                'class' => Editor::class,
+                'choice_label' => 'editorName'
+            ])
         ;
     }
 

@@ -107,91 +107,43 @@
                                             <div class="general-info">
                                                 <div class="item">
                                                     <div class="row">
-                                                        <div class="col-lg-4">
-                                                            <div class="listing-item">
-                                                                <div class="left-image">
-                                                                    <a href="{{ path('bugPage') }}"><img src="assets/images/4975-dark-souls-bug.jpg" alt=""></a>
-                                                                </div>
-                                                                <div class="right-content align-self-center">
-                                                                    <a href="{{ path('bugPage') }}">
-                                                                        <h4>Bug trouvé</h4>
-                                                                    </a>
-                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ak incididunt ut labore et dolore magna aliqua.</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <div class="listing-item">
-                                                                <div class="left-image">
-                                                                    <a href="{{ path('bugPage') }}"><img src="assets/images/02-SNAKE.jpg" alt=""></a>
-                                                                </div>
-                                                                <div class="right-content align-self-center">
-                                                                    <a href="{{ path('bugPage') }}">
-                                                                        <h4>Bug trouvé</h4>
-                                                                    </a>
-                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ak incididunt ut labore et dolore magna aliqua.</p>
+                                                        {% for listBugs in listBugs %}
+                                                            <div class="col-lg-4">
+                                                                <div class="listing-item">
+                                                                    <div class="left-image">
+                                                                        <a href="{{ path('bugPage', {'id': listBugs.id}) }}"><img src="{{ asset('assets/images/' ~listBugs.descriptionImgBug ) }}" alt=""></a>
+                                                                    </div>
+                                                                    <div class="right-content align-self-center">
+                                                                        <a href="{{ path('bugPage', {'id': listBugs.id}) }}">
+                                                                            <h4>{{ listBugs.titleBug }}</h4>
+                                                                        </a>
+                                                                        <p>{{ listBugs.smallTextBug }}</p>
+                                                                        <h6>{{ listBugs.subtitleBug }}</h6>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <div class="listing-item">
-                                                                <div class="left-image">
-                                                                    <a href="{{ path('bugPage') }}"><img src="assets/images/06-GIRAFFE-e1428672788656.gif" alt=""></a>
-                                                                </div>
-                                                                <div class="right-content align-self-center">
-                                                                    <a href="{{ path('bugPage') }}">
-                                                                        <h4>Bug trouvé</h4>
-                                                                    </a>
-                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ak incididunt ut labore et dolore magna aliqua.</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <div class="listing-item">
-                                                                <div class="left-image">
-                                                                    <a href="{{ path('bugPage') }}"><img src="assets/images/8472099860_8f2192c54a_b.jpg" alt=""></a>
-                                                                </div>
-                                                                <div class="right-content align-self-center">
-                                                                    <a href="{{ path('bugPage') }}">
-                                                                        <h4>Bug trouvé</h4>
-                                                                    </a>
-                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ak incididunt ut labore et dolore magna aliqua.</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <div class="listing-item">
-                                                                <div class="left-image">
-                                                                    <a href="{{ path('bugPage') }}"><img src="assets/images/divers-jeux-video-5195144b841cb.jpg" alt=""></a>
-                                                                </div>
-                                                                <div class="right-content align-self-center">
-                                                                    <a href="{{ path('bugPage') }}">
-                                                                        <h4>Bug trouvé</h4>
-                                                                    </a>
-                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ak incididunt ut labore et dolore magna aliqua.</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <div class="listing-item">
-                                                                <div class="left-image">
-                                                                    <a href="{{ path('bugPage') }}"><img src="assets/images/lessims-1-1024x614.jpg" alt=""></a>
-                                                                </div>
-                                                                <div class="right-content align-self-center">
-                                                                    <a href="{{ path('bugPage') }}">
-                                                                        <h4>Bug trouvé</h4>
-                                                                    </a>
-                                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ak incididunt ut labore et dolore magna aliqua.</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        {% endfor %}
+
+
                                                     </div>
                                                 </div>
 
                                             </div>
                                         </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4"></div>
+                                <div class="col-lg-4">
+                                    <div class="nav-links">
+                                        {% for i in 1..(listBugs.totalItemCount/listBugs.itemNumberPerPage + 1) | round(0, 'floor') %}
+                                            <a class="page-numbers {{   i == app.request.get('page') ? 'current' : '' }}"
+                                               href="{{ url(app.request.get('_route'), app.request.query.all() | merge({page: i}) ) }}">{{ i }}</a>
+                                        {% endfor %}
                                     </div>
                                 </div>
+                                <div class="col-lg-4"></div>
                             </div>
                         </div>
                     </div>

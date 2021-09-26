@@ -39,10 +39,17 @@ class GeneralController extends AbstractController
      * page de recherche de bug
      * @Route("/bugSearch", name="bugSearchPage")
      */
-    public function bugSearch(): Response
+    public function bugSearch(BugRepository $bugRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $bugs = $bugRepository->findAllByRecent();
+        $bugs = $paginator->paginate(
+            $bugs,
+            $request->query->getInt('page', 1),
+            6
+        );
         return $this->render('pages/searchBug.html.twig', [
-            'pageTitle' => 'Rechercher un bug'
+            'pageTitle' => 'Rechercher un bug',
+            'listBugs' => $bugs
         ]);
     }
 
@@ -54,9 +61,9 @@ class GeneralController extends AbstractController
                             GameRepository $gameRepository, EditorRepository $editorRepository, EntityManagerInterface $manager): Response
     {
         $bug = $bugRepository->find($id);
-        $game = $gameRepository->findByBugId($id);
+        $game = $bug->getIdGame();
         $editor =$editorRepository->find($game->getIdEditor());
-        $allComments = $commentsRepo->findByBugId($id);
+        $allComments = $commentsRepo->findByBugId($bug);
         $comment = new Comment();
         $commentsForm = $this->createForm(CommentFormType::class, $comment);
         $commentsForm->handleRequest($request);
@@ -69,7 +76,7 @@ class GeneralController extends AbstractController
 
             $manager->persist($comment);
             $manager->flush();
-            return $this->redirectToRoute('articlePage',[
+            return $this->redirectToRoute('bugPage',[
                 'id'=> $bug->getId()
             ]);
         }

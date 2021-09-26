@@ -19,10 +19,11 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
-    public function findByBugId($idBug): ?Comment
+
+    public function findByBugId($idBug)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.idBugs = :val')
+            ->andWhere('r.idBug = :val')
             ->setParameter('val', $idBug)
             ->orderBy('r.id', 'DESC')
             ->getQuery()
