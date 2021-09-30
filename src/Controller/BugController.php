@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Bug;
+use App\Form\BugFixFormType;
 use App\Form\BugFormType;
 use App\Repository\BugRepository;
 use App\Services\FileUploader;
@@ -27,6 +28,7 @@ class BugController extends AbstractController
             $bug = new Bug();
         }
         $bugForm = $this->createForm(BugFormType::class, $bug);
+        //$bugFIxForm = $this->createForm(BugFixFormType::class, $bugFix);
 
         $bugForm->handleRequest($request);
         if(($bugForm->isSubmitted() && $bugForm->isValid())){

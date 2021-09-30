@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\ContactMessage;
 use App\Form\CommentFormType;
+use App\Form\ContactMessageFormType;
 use App\Repository\BugRepository;
 use App\Repository\CommentRepository;
 use App\Repository\EditorRepository;
@@ -95,10 +97,25 @@ class GeneralController extends AbstractController
      * page de contact
      * @Route("/contact", name="contactPage")
      */
-    public function contactPage(): Response
+    public function contactPage(Request $request): Response
     {
+        $contactMessage = new ContactMessage();
+        $contactForm = $this->createForm(ContactMessageFormType::class, $contactMessage);
+
+        $contactForm->handleRequest($request);
+        if(($contactForm->isSubmitted() && $contactForm->isValid())){
+
+            $contactMessage = $contactForm->getData();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($contactMessage);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('homePage', []);
+        }
+
         return $this->render('pages/contact.html.twig', [
-            'pageTitle' => 'Contact'
+            'pageTitle' => 'Contact',
+            'contactForm' => $contactForm->createView()
         ]);
     }
 

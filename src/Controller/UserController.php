@@ -59,14 +59,6 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/logout", name="app_logout")
-     */
-    public function logout()
-    {
-
-    }
-
-    /**
      * page de profil
      * @Route("/profile", name="profilePage")
      */

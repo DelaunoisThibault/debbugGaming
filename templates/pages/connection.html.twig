@@ -1,5 +1,8 @@
 {% extends "base.html.twig" %}
 {% block content %}
+    {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
     <div class="page-heading">
         <div class="container">
             <div class="row">
@@ -21,6 +24,15 @@
                     <div class="inner-content">
                         <div class="row">
                             <div class="col-lg-12 align-self-center">
+                                {{ form_start(registrationForm) }}
+                                {{ form_row(registrationForm.email) }}
+                                {{ form_row(registrationForm.plainPassword, {
+                                    label: 'Password'
+                                }) }}
+                                {{ form_row(registrationForm.agreeTerms) }}
+
+                                <button type="submit" class="btn">Register</button>
+                                {{ form_end(registrationForm) }}
 
                                 <form id="contact" class="connectInscript" action="" method="get">
                                     <div class="row">

@@ -25,17 +25,18 @@
        </div>
        <div class="row connectInscript">
         <p>Vous pouvez aussi nous contacter via ce formulaire :</p>
-        <form id="search-form" class="limitPadding" name="gs" method="submit" role="search" action="#">
+        {{ form_start(contactForm, {'method': 'POST', 'attr':{'id': 'search-form', 'class':'limitPadding', 'name': 'gs'}}) }}
+
          <div class="row searchFormPage">
           <fieldset>
-           <label for="email">Adresse email :</label>
-           <input class="searchText contactEmailInput" type="email" name="email" required>
-           <label for="contactText">Votre message :</label>
-           <textarea id="contactText" class="textareaBugCreation" name="contactText" required></textarea>
-           <button class="main-button bugInsideFormSpaces"> Envoyer</button>
+           {{ form_row(contactForm.nameContactMessage, {'label':'Votre nom (ou pseudonyme) :', 'attr': {'class':'searchText contactEmailInput'}}) }}
+           {{ form_row(contactForm.mailContact, {'label':'Adresse email :', 'attr': {'class':'searchText contactEmailInput'}}) }}
+           {{ form_row(contactForm.textContactMessage, {'label':'Votre message :', 'attr': {'id': 'contactText', 'class':'textareaBugCreation'}}) }}
+
           </fieldset>
+          <button class="main-button bugInsideFormSpaces"> Envoyer</button>
          </div>
-        </form>
+        {{ form_end(contactForm) }}
        </div>
       </div>
      </div>
