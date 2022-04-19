@@ -33,15 +33,13 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+            $entityManager = $this->getDoctrine()->getManager();
+            $hash = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($hash);
+
             $user->setRoles(['ROLE_USER'])
                 ->setLocked(false)
+                ->setIsVerified(false)
                 ->setAvatar('user_icon.png');
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -62,6 +60,7 @@ class RegistrationController extends AbstractController
         }
 
         return $this->render('pages/inscription.html.twig', [
+            'pageTitle' => 'Inscription',
             'registrationForm' => $form->createView(),
         ]);
     }

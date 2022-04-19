@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -29,14 +31,21 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
+     * @Assert\Count(
+     *     max = 1,
+     *     maxMessage = "You cannot specify more than {{ limit }} role"
+     * )
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(min="5", minMessage="votre mot de passe doit faire au moins 5 caractères")
      */
     private $password;
+
+    private $plainPassword;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -118,6 +127,22 @@ class User implements UserInterface
         $this->roles = $roles;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     */
+    public function setPlainPassword($plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
     }
 
     /**

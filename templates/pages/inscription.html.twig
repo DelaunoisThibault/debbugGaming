@@ -17,34 +17,35 @@
 
   <div class="contact-page">
    <div class="container">
+   {% for flashError in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+    {% endfor %}
     <div class="row">
      <div class="col-lg-12">
       <div class="inner-content">
        <div class="row">
         <div class="col-lg-12 align-self-center">
+        
 
          <form id="contact" class="connectInscript" action="" method="get">
           <div class="row">
            <div class="col-lg-12">
-            <fieldset>
-             <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your Email" required="">
-            </fieldset>
-           </div>
+           {{ form_start(registrationForm) }}
+           <fieldset>
+           {{ form_row(registrationForm.email, {'label': 'Adresse mail :' }) }}
+           </fieldset>
+        <fieldset>
+           {{ form_row(registrationForm.pseudonym, {'label': 'Pseudonyme :' })}}
+           </fieldset>
+           <fieldset>
+           {{ form_row(registrationForm.plainPassword, {label: 'Mot de passe :' }) }}
+           </fieldset>
            <div class="col-lg-12">
             <fieldset>
-             <input type="text" name="pseudo" id="pseudo" placeholder="Pseudonyme" required="">
+             <button type="submit" id="form-submit" class="main-button "> Valider</button>
             </fieldset>
            </div>
-           <div class="col-lg-12">
-            <fieldset>
-             <input name="password" type="password" class="form-control" id="password" placeholder="Password" required=""></input>
-            </fieldset>
-           </div>
-           <div class="col-lg-12">
-            <fieldset>
-             <button type="submit" id="form-submit" class="main-button "> Connexion</button>
-            </fieldset>
-           </div>
+           {{ form_end(registrationForm) }}
           </div>
          </form>
 

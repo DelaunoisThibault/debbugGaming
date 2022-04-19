@@ -6,6 +6,7 @@ use App\Entity\Bug;
 use App\Form\BugFixFormType;
 use App\Form\BugFormType;
 use App\Repository\BugRepository;
+use App\Repository\GameRepository;
 use App\Services\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +23,8 @@ class BugController extends AbstractController
      * @Route("/bug/new", name="bugCreationPage")
      * @Route("/bug/update/{id<\d+>}", name="bugUpdatePage")
      */
-    public function bugForm(Request $request, Bug $bug = null, FileUploader $fileUploader, EntityManagerInterface $manager, BugRepository $bugRepository): Response
+    public function bugForm(Request $request, Bug $bug = null, FileUploader $fileUploader, EntityManagerInterface $manager, BugRepository $bugRepository, 
+    GameRepository $gameRepository): Response
     {
         if(!$bug){
             $bug = new Bug();
@@ -40,6 +42,13 @@ class BugController extends AbstractController
             }
             $bug = $bugForm->getData();
 
+            $totalBugsForGame = $bugRepository->createQueryBuilder('a')
+            ->where('a.idGame = $game')
+            ->select('count(a.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+            $bugRate = ($totalBugsForGame);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($bug);
             $entityManager->flush();
@@ -49,13 +58,7 @@ class BugController extends AbstractController
             ]);
         }
 
-        /*$totalBugsForGame = $bugRepository->createQueryBuilder('a')
-            ->andWhere('a.idGame = $game')
-            ->select('count(a.id')
-            ->getQuery()
-            ->getSingleScalarResult();
-        $bugRate = ($totalBugsForGame*0.33);
-        */
+        
 
         return $this->render('pages/creationBug.html.twig', [
             'pageTitle' => 'Créer/mettre à jour un bug'
