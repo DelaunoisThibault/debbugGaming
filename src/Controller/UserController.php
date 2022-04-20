@@ -16,7 +16,7 @@ class UserController extends AbstractController
 
     /**
      * page de connexion
-     * @Route("/connection", name="connectionPage")
+     * @Route("/connection", name="connectionPag")
      */
     public function connection(AuthenticationUtils $authenticationUtils): Response
     {

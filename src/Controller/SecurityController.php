@@ -42,7 +42,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/login", name="connectionPag")
+     * @Route("/login", name="connectionPage")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
