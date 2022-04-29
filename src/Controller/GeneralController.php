@@ -7,6 +7,8 @@ use App\Entity\ContactMessage;
 use App\Form\CommentFormType;
 use App\Form\ContactMessageFormType;
 use App\Repository\BugRepository;
+use App\Repository\BugFixRepository;
+use App\Repository\BugSolutionRepository;
 use App\Repository\CommentRepository;
 use App\Repository\EditorRepository;
 use App\Repository\GameRepository;
@@ -60,9 +62,11 @@ class GeneralController extends AbstractController
      * @Route("/bug/{id<\d+>}", name="bugPage")
      */
     public function bugPage($id, Request $request, CommentRepository $commentsRepo, BugRepository $bugRepository,
-                            GameRepository $gameRepository, EditorRepository $editorRepository, EntityManagerInterface $manager): Response
+                            BugFixRepository $bugFixRepository, BugSolutionRepository $bugSolutionRepository, EditorRepository $editorRepository, EntityManagerInterface $manager): Response
     {
         $bug = $bugRepository->find($id);
+        $bugSolutions = $bugSolutionRepository->findByBugId($bug);
+        $bugFix = $bugFixRepository->findByBugId($bug);
         $game = $bug->getIdGame();
         $editor =$editorRepository->find($game->getIdEditor());
         $allComments = $commentsRepo->findByBugId($bug);
@@ -88,6 +92,8 @@ class GeneralController extends AbstractController
             'bug' => $bug,
             'game' => $game,
             'editor' => $editor,
+            'bugSolutions' => $bugSolutions,
+            'bugFix' => $bugFix,
             'comments' => $allComments,
             'commentsForm' => $commentsForm->createView()
         ]);

@@ -22,8 +22,8 @@
 
       <div class="col-lg-4 bugInsideFormSpaces"></div>
       <div class="col-lg-4 noRightMargin bugInsideFormSpaces">
-       <h2>Titre bug</h2>
-       <h4>Sous-titre Bug</h4>
+       <h2>{{ bug.titleBug }}</h2>
+       <h4>{{ bug.subtitleBug }}</h4>
        <img src="{{ asset('assets/images/' ~bug.descriptionImgBug) }}" alt="">
       </div>
       <div class="col-lg-4 bugInsideFormSpaces"></div>
@@ -82,33 +82,59 @@
       <div class="col-lg-12 bugInsideFormSpaces">
        <p>Sévérité : {{ bug.severityBug }}</p>
        <p>Fréquence : {{ bug.frequencyBug }}</p>
-       <p>Résolution suite à une MAJ :</p>
+       {% if bugFix is empty %}
+         <p>Résolution suite à une MAJ : Pas de données </p>
+       {% else %}
+         {% if "{{ bugFix.resolved }}" == true %}
+           <p>Résolution suite à une MAJ : Oui </p>
+           <p>Numéro MàJ : {{ bugFix.majNumber }}</p>
+           <p>Date MàJ : {{ bugFix.dateBugFix | date("d/m/Y") }}</p>
+         {% else %}
+           <p>Résolution suite à une MAJ : Non </p>
+         {% endif %}
+       {% endif %}
       </div>
       <div class="col-lg-12">
        <p>{{ bug.descriptionTextBug }}
        </p>
       </div>
+      <div class="col-lg-4"><button class="main-button buttonStyle">Modifier les informations sur le bug</button></div>
+      <div class="col-lg-8"></div>
      </div>
 
      <div class="row bugBlockSpaces">
+     <h2>Solution(s) existante(s) :</h2>
+     {% if bugSolutions is empty %}
+       <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+          <p>Aucune solution répertoriée pour l'instant.</p>
+        </div>
+       <div class="col-lg-4"></div>
+     {% else %}
+       {% for bugSolution in bugSolutions %}
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+          <img src="{{ asset('assets/images/' ~bugSolution.imgBugSolution) }}" alt="">
+        </div>
+        <div class="col-lg-4"></div>
 
-      <div class="col-lg-4"></div>
-      <div class="col-lg-4">
-       <h2>Titre solution bug</h2>
-       <img src="{{ asset('assets/images/resolution-de-problemes.jpg') }}" alt="">
-      </div>
-      <div class="col-lg-4"></div>
+        <div class="col-lg-12">
+         <p>{{ bugSolution.textBugSolution }}</p>
+        </div>
 
-      <div class="col-lg-12">
-       <p>Racontez-moi ça, mais leurs boîtes, paniers et corbeilles. Mettre l'école sous le signe de croix. Ceci dit, portons maintenant notre attention sur un seul étage, qui jouxtait l'appartement. Regarde-moi, je meurs après lui, et retournait
-        le carton entre ses gros doigts tremblants. Gagnons le passage secret dont parte ce vieillard ? Interprétation des résultats de l'éducation que recevait la petite camarade. Séparé des siens, elle n'était guère en beauté en
-        ce moment dans la petite ville ? Optimistes par égoïsme, désireux de solitude. Emmenez votre soeur, continua-t-il, c'est qui les a faites si bonnes ? Nullement, il signifie que les différentes parties de l'énergie pour autre
-        chose. Oh oui, je souffre déjà de symptômes de faiblesse et d'accomplir sa parole avec la fidélité rogue d'une chienne en folie. Oserai-je vraiment descendre sur la terre la plus détestable période de son existence, pas même
-        un coup de patte. Libération anticipée dans la légalité ! Esclaves, obéissez en toutes choses. Machines avant un tiers, mais selon son importance. Excusez ma curiosité, en quête de quelque aventure.</p>
-      </div>
-      <div class="col-lg-4"><button class="btn btn-primary">Modifier l'article</button></div>
+        <div class="col-lg-4"><button class="main-button buttonStyle">Modifier la solution</button></div>
+        <div class="col-lg-4"><button class="main-button buttonStyle">Supprimer la solution</button></div>
+        <div class="col-lg-4"></div>
+        
+       {% endfor %}
+
+      {% endif %}
+      
+     </div>
+
+     <div class="row bugBlockSpaces">
+      <div class="col-lg-4"><button class="main-button buttonStyle">Supprimer le bug</button></div>
       <div class="col-lg-8"></div>
-
      </div>
 
      <div class="row bugBlockSpaces">
@@ -122,31 +148,18 @@
       <div class="bugPageBetweenSpaces">
 
       </div>
+      {% for comment in comments %}
       <div class="col-lg-2">
-       <img src="{{ asset('assets/images/user_icon.png') }}" alt="">
+       <img src="{{ asset('images/' ~ comment.idUser.avatar) }}" alt="">
       </div>
       <div class="col-lg-10">
-       <p>Ayez l'obligeance de nous suivre à bord, devinant pourquoi elles étaient venues chercher ! Dérangé par ce tohu-bohu qui troublait sa cervelle par d'affreuses convulsions... Frappée d'effroi devant cette solitude hantée par un revenant.
-        Autorisé, autorisé, c'est donc son état ?</p>
+       <p>{{ comment.textComments }}</p>
       </div>
       <div class="col-lg-12 bugPageBetweenSpaces">
        <button class="btn btn-primary">Modifier</button>
        <button class="btn btn-primary">Supprimer</button>
       </div>
-
-
-      <div class="col-lg-2">
-       <img src="{{ asset('assets/images/user_icon.png') }}" alt="">
-      </div>
-      <div class="col-lg-10">
-       <p>Prince, me dit-il en me faisant cette dernière question, on le ramènera. Cacher nos cheveux blancs sous un mouchoir à bord de la natte de ma couche et m'assoupis presque aussitôt.</p>
-
-      </div>
-      <div class="col-lg-12 bugPageBetweenSpaces">
-       <button class="btn btn-primary">Modifier</button>
-       <button class="btn btn-primary">Supprimer</button>
-      </div>
-
+      {% endfor %}
 
       <div class="col-lg-12">
        <h2>Laisser un commentaire</h2>

@@ -21,7 +21,6 @@ class AdminBugFormType extends AbstractType
             ->add('frequencyBug')
             ->add('published')
             ->add('idGame')
-            ->add('idUser')
         ;
     }
 

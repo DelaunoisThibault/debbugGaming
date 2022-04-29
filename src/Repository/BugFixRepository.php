@@ -19,6 +19,16 @@ class BugFixRepository extends ServiceEntityRepository
         parent::__construct($registry, BugFix::class);
     }
 
+    public function findByBugId($idBug)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.idBug = :val')
+            ->setParameter('val', $idBug)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
     // /**
     //  * @return BugFix[] Returns an array of BugFix objects
     //  */

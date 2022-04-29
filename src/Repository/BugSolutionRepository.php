@@ -19,6 +19,17 @@ class BugSolutionRepository extends ServiceEntityRepository
         parent::__construct($registry, BugSolution::class);
     }
 
+    public function findByBugId($idBug)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.idBug = :val')
+            ->setParameter('val', $idBug)
+            ->orderBy('r.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return BugSolution[] Returns an array of BugSolution objects
     //  */

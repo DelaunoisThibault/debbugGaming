@@ -990,7 +990,7 @@ form#search-form input::placeholder {
     font-size: 15px;
 }
 
-form#search-form button {
+form#search-form button, .buttonStyle {
     width: 100%;
     height: 100%;
     background-color: #8d99af;
