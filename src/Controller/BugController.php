@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Bug;
+use App\Entity\BugSolution;
 use App\Form\BugFixFormType;
 use App\Form\BugFormType;
+use App\Form\BugSolutionFormType;
 use App\Repository\BugRepository;
 use App\Repository\GameRepository;
 use App\Services\FileUploader;
@@ -30,7 +32,6 @@ class BugController extends AbstractController
             $bug = new Bug();
         }
         $bugForm = $this->createForm(BugFormType::class, $bug);
-        //$bugFIxForm = $this->createForm(BugFixFormType::class, $bugFix);
 
         $bugForm->handleRequest($request);
         if(($bugForm->isSubmitted() && $bugForm->isValid())){
@@ -61,7 +62,51 @@ class BugController extends AbstractController
         
 
         return $this->render('pages/creationBug.html.twig', [
-            'pageTitle' => 'Créer/mettre à jour un bug'
+            'pageTitle' => 'Créer/mettre à jour un bug',
+            'bugForm' => $bugForm
+        ]);
+    }
+
+    /**
+     * page de création de solution de bug
+     * @Route("/bugSolution/new", name="bugSolutionCreationPage")
+     * @Route("/bugSolution/update/{id<\d+>}", name="bugSolutionUpdatePage")
+     */
+    public function bugSolutionForm(Request $request, BugSolution $bugSolution = null, FileUploader $fileUploader, EntityManagerInterface $manager, BugRepository $bugRepository, 
+    GameRepository $gameRepository): Response
+    {
+        $bug= $bugSolution->getIdBug();
+        if(!$bugSolution){
+            $bugSolution = new BugSolution;
+            $bugSolution->setIdBug($bug);
+        }
+        $bugSolutionForm = $this->createForm(BugSolutionFormType::class, $bugSolution);
+        
+        
+
+        $bugSolutionForm->handleRequest($request);
+        if(($bugSolutionForm->isSubmitted() && $bugSolutionForm->isValid())){
+            /** @var UploadedFile $avatarFile */
+            $imageFile = $bugSolutionForm->get('ImgBugSolution')->getData();
+            if($imageFile){
+                $imageFileName = $fileUploader->uploadImageFromForm($imageFile);
+                $bugSolution->setImgBugSolution($imageFileName);
+            }
+
+            $bugSolution = $bugSolutionForm->getData();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($bugSolution);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('bugPage', [
+                'id' => $bug->getId()
+            ]);
+        }
+
+        return $this->render('pages/addBugSolution.html.twig', [
+            'pageTitle' => 'Créer/mettre à jour un bug',
+            'bugSolutionForm' => $bugSolutionForm
         ]);
     }
 }

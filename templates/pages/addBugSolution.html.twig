@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+ {% block content %}
+  <div class="page-heading">
+   <div class="container">
+    <div class="row">
+     <div class="col-lg-4"></div>
+     <div class="col-lg-8">
+      <div class="top-text header-text">
+       <h2>Proposer un bug</h2>
+      </div>
+     </div>
+     <div class="col-lg-4"></div>
+    </div>
+   </div>
+  </div>
+
+  <div class="listing-page">
+   <div class="container">
+    <div class="row">
+     <div class="col-lg-12">
+      <div class="naccs">
+       <div class="grid">
+        <div class="row">
+         <form id="search-form" name="sB" method="submit" role="search" action="#">
+          <div class="row">
+           <div class="col-lg-12 bugFormSpaces">
+            <fieldset>
+             <div class="col-lg-12 bugInsideFormSpaces">
+              <label for="bugSolutionTitle">Titre de la solution du bug:</label>
+              <input type="text" class="inputBugForm" name="bugSolutionTitle">
+             </div>
+             <div class="col-lg-12 bugInsideFormSpaces">
+              <label for="bugSolutionImage">Image solution bug:</label>
+              <input type="file" name="bugSolutionImage">
+             </div>
+             <div class="col-lg-12 bugInsideFormSpaces">
+              <label for="bugSolutionText">Texte de la solution du bug :</label>
+              <textarea id="bugSolutionText" class="textareaBugCreation" name="bugSolutionText"></textarea>
+             </div>
+            </fieldset>
+           </div>
+           <div class="col-lg-4"></div>
+           <div class="col-lg-4"></div>
+           <div class="col-lg-4">
+            <button><input type="submit" name="submitBugButton"></button>
+           </div>
+
+          </div>
+         </form>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ {% endblock %}

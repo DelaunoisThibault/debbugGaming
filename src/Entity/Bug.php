@@ -6,6 +6,7 @@ use App\Repository\BugRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=BugRepository::class)
@@ -85,6 +86,11 @@ class Bug
      * @ORM\OneToMany(targetEntity=BugSolution::class, mappedBy="idBug")
      */
     private $bugSolutions;
+
+    /**
+     * @ORM\OneToOne(targetEntity=BugFix::class, inversedBy="bugId", cascade={"persist", "remove"})
+     */
+    private $idBugFix;
 
     public function __construct()
     {
@@ -273,6 +279,18 @@ class Bug
                 $bugSolution->setIdBug(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIdBugFix(): ?BugFix
+    {
+        return $this->idBugFix;
+    }
+
+    public function setIdBugFix(?BugFix $idBugFix): self
+    {
+        $this->idBugFix = $idBugFix;
 
         return $this;
     }

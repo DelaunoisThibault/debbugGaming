@@ -18,12 +18,6 @@ class BugFix
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=Bug::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $idBug;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $resolved;
@@ -38,21 +32,14 @@ class BugFix
      */
     private $dateBugFix;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Bug::class, mappedBy="idBugFix", cascade={"persist", "remove"})
+     */
+    private $bugId;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdBug(): ?Bug
-    {
-        return $this->idBug;
-    }
-
-    public function setIdBug(Bug $idBug): self
-    {
-        $this->idBug = $idBug;
-
-        return $this;
     }
 
     public function getResolved(): ?bool
@@ -87,6 +74,28 @@ class BugFix
     public function setDateBugFix(\DateTimeInterface $dateBugFix): self
     {
         $this->dateBugFix = $dateBugFix;
+
+        return $this;
+    }
+
+    public function getBugId(): ?Bug
+    {
+        return $this->bugId;
+    }
+
+    public function setBugId(?Bug $bugId): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($bugId === null && $this->bugId !== null) {
+            $this->bugId->setIdBugFix(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($bugId !== null && $bugId->getIdBugFix() !== $this) {
+            $bugId->setIdBugFix($this);
+        }
+
+        $this->bugId = $bugId;
 
         return $this;
     }

@@ -6,6 +6,8 @@ use App\Entity\BugSolution;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class BugSolutionFormType extends AbstractType
 {
@@ -13,7 +15,18 @@ class BugSolutionFormType extends AbstractType
     {
         $builder
             ->add('textBugSolution')
-            ->add('imgBugSolution')
+            ->add('imgBugSolution', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/*'
+                        ]
+                    ])
+                ]
+            ])
         ;
     }
 
