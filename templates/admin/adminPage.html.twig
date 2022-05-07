@@ -77,6 +77,7 @@
        <th>Image Bug</th>
        <th>Sévérité Bug</th>
        <th>Fréquence Bug</th>
+       <th>Patché</th>
        <th>Jeu</th>
        <th>Texte Bug</th>
        <th>Posté par</th>
@@ -91,16 +92,22 @@
        </td>
        <td>{{ bug.subtitleBug }}</td>
        <td>{{ bug.smallTextBug }}</td>
-       <td><img src="{{ asset('images/' ~ bug.descriptionImgBug) }}" alt=""></td>
+       <td><img src="{{ asset('assets/images/' ~ bug.descriptionImgBug) }}" alt=""></td>
        <td>{{ bug.severityBug }}</td>
        <td>{{ bug.frequencyBug }}</td>
+       <td>{% if bug.idBugFix is empty %}
+       Attention : pas de bug fix détecté
+       {% else %}
+       {{ bug.idBugFix.resolved }}
+       {% endif %}
+       </td>
        <td>{{ bug.idGame.nameGame }}</td>
        <td>{{ bug.descriptionTextBug }}</td>
        <td>{{ bug.idUser.email }}</td>
        <td>{{ bug.published }}
        </td>
-       <td><button>Modifier</button></td>
-       <td><button>Supprimer</button></td>
+       <td><button class="main-button buttonStyle"><a href="{{ path('bugAdminUpdatePage', {'id': bug.id}) }}">Modifier</a></button></td>
+       <td><button class="main-button buttonStyle"><a href="{{ path('adminDeleteBug', {'id': bug.id}) }}">Supprimer</a></button></td>
       </tr>
       {% endfor %}
       </tbody>
@@ -118,14 +125,17 @@
       <tbody>
       {% for bugFix in bugFixs %}
       <tr>
-       <td>
-        {{ bugFix.idBug.titleBug }}
+       <td>{% if bugFix.bugId  is empty %}
+       Erreur : pas de bug correspondant
+       {% else %}
+        {{ bugFix.bugId.titleBug }}
+        {% endif %}
        </td>
        <td>{{ bugFix.resolved }}</td>
        <td>{{ bugFix.majNumber }}</td>
-       <td>{{ bugFix.dateBugFix }}</td>
-       <td><button>Modifier</button></td>
-       <td><button>Supprimer</button></td>
+       <td>{{ bugFix.dateBugFix | date("d/m/Y") }}</td>
+       <td><button class="main-button buttonStyle"><a href="{{ path('bugFixAdminUpdatePage', {'id': bugFix.id}) }}">Modifier</a></button></td>
+       <td><button class="main-button buttonStyle"><a href="{{ path('adminDeleteBugFix', {'id': bugFix.id}) }}">Supprimer</a></button></td>
       </tr>
       {% endfor %}
       </tbody>
@@ -135,6 +145,7 @@
       <thead class="thead-light">
       <tr>
        <th>Titre Bug</th>
+       <th>Titre Solution Bug</th>
        <th>Image solution</th>
        <th>Texte solution</th>
       </tr>
@@ -145,10 +156,13 @@
        <td>
         {{ bugSolution.idBug.titleBug }}
        </td>
-       <td><img src="{{ asset('images/' ~ bugSolution.imgBugSolution) }}" alt=""></td>
+       <td>
+        {{ bugSolution.titleBugSolution }}
+       </td>
+       <td><img src="{{ asset('assets/images/' ~ bugSolution.imgBugSolution) }}" alt=""></td>
        <td>{{ bugSolution.textBugSolution }}</td>
-       <td><button>Modifier</button></td>
-       <td><button>Supprimer</button></td>
+       <td><button class="main-button buttonStyle"><a href="{{ path('bugSolutionAdminUpdatePage', {'id': bugSolution.id}) }}">Modifier</a></button></td>
+       <td><button class="main-button buttonStyle"><a href="{{ path('adminDeleteBugSolution', {'id': bugSolution.id}) }}">Supprimer</a></button></td>
       </tr>
       {% endfor %}
       </tbody>
@@ -158,7 +172,6 @@
       <thead class="thead-light">
       <tr>
        <th>Nom éditeur</th>
-       <th>Jeux liés</th>
       </tr>
       </thead>
       <tbody>
@@ -167,12 +180,8 @@
        <td>
         {{ editor.editorName }}
        </td>
-       <td>{% for editorGame in "{{ editor.games.nameGame }}" %}
-       {{ editorGame }}
-       {% endfor %}
-       </td>
-       <td><button>Modifier</button></td>
-       <td><button>Supprimer</button></td>
+       <td><button class="main-button buttonStyle"><a href="{{ path('editorAdminUpdatePage', {'id': editor.id}) }}">Modifier</a></button></td>
+       <td><button class="main-button buttonStyle"><a href="{{ path('adminDeleteEditor', {'id': editor.id}) }}">Supprimer</a></button></td>
       </tr>
       {% endfor %}
       </tbody>
@@ -185,7 +194,6 @@
        <th>Année de publication</th>
        <th>Taux bug</th>
        <th>éditeur</th>
-       <th>Bug</th>
       </tr>
       </thead>
       <tbody>
@@ -197,12 +205,8 @@
        <td>{{ game.yearOfPublication }}</td>
        <td>{{ game.bugRating }}</td>
        <td>{{ game.idEditor.editorName }}</td>
-       <td>{% for gameBug in "{{ game.bugs.titleBug }}" %}
-       {{ gameBug }}
-       {% endfor %}
-       </td>
-       <td><button>Modifier</button></td>
-       <td><button>Supprimer</button></td>
+       <td><button class="main-button buttonStyle"><a href="{{ path('gameAdminUpdatePage', {'id': game.id}) }}">Modifier</a></button></td>
+       <td><button class="main-button buttonStyle"><a href="{{ path('adminDeleteGame', {'id': game.id}) }}">Supprimer</a></button></td>
       </tr>
       {% endfor %}
       </tbody>
@@ -217,7 +221,6 @@
        <th>pseudonyme</th>
        <th>Avatar</th>
        <th>Verrouillé</th>
-       <th>Bug posté</th>
        <th>Vérifié</th>
       </tr>
       </thead>
@@ -230,15 +233,11 @@
        <td>{{ user.roles |json_encode }}</td>
        <td>{{ user.password }}</td>
        <td>{{ user.pseudonym }}</td>
-       <td><img src="{{ asset('images/' ~ user.avatar) }}" alt=""></td>
+       <td><img src="{{ asset('assets/images/' ~ user.avatar) }}" alt=""></td>
        <td>{{ user.locked }}</td>
-       <td>{% for userBug in "{{ user.bugs.titleBug }}" %}
-       {{ userBug }}
-       {% endfor %}
-       </td>
        <td>{{ user.isVerified }}</td>
-       <td><button>Modifier</button></td>
-       <td><button>Supprimer</button></td>
+       <td><button class="main-button buttonStyle"><a href="{{ path('userAdminUpdatePage', {'id': user.id}) }}">Modifier</a></button></td>
+       <td><button class="main-button buttonStyle"><a href="{{ path('adminDeleteUser', {'id': user.id}) }}">Supprimer</a></button></td>
       </tr>
       {% endfor %}
       </tbody>
@@ -257,11 +256,11 @@
       {% for comment in comments %}
       <tr>
        <td>{{ comment.textComments }}</td>
-       <td>{{ comment.date }}</td>
+       <td>{{ comment.date | date("d/m/Y")  }}</td>
        <td>{{ comment.idUser.email }}</td>
        <td>{{ comment.idBug.titleBug }}</td>
-       <td><button>Modifier</button></td>
-       <td><button>Supprimer</button></td>
+       <td><button class="main-button buttonStyle"><a href="{{ path('commentAdminUpdatePage', {'id': comment.id}) }}">Modifier</a></button></td>
+       <td><button class="main-button buttonStyle"><a href="{{ path('adminDeleteComment', {'id': comment.id}) }}">Supprimer</a></button></td>
       </tr>
       {% endfor %}
       </tbody>
@@ -281,8 +280,8 @@
        <td>{{ contactMessage.nameContactMessage }}</td>
        <td>{{ contactMessage.mailContact }}</td>
        <td>{{ contactMessage.textContactMessage }}</td>
-       <td><button>Modifier</button></td>
-       <td><button>Supprimer</button></td>
+       <td><button class="main-button buttonStyle"><a href="{{ path('contactMessageUpdatePage', {'id': contactMessage.id}) }}">Modifier</a></button></td>
+       <td><button class="main-button buttonStyle"><a href="{{ path('contactMessageDeletePage', {'id': contactMessage.id}) }}">Supprimer</a></button></td>
       </tr>
       {% endfor %}
       </tbody>
@@ -293,8 +292,24 @@
 
       </tbody>
      </table>
-     <button>Créer un nouvel article</button>
-    </div>
+     <div class="row">
+       {% if app.request.attributes.get('_route') == 'adminGestionBugsPage' %}
+         <div class="col-lg-4"><button class="main-button buttonStyle"><a href="{{ path('bugAdminCreationPage') }}">Créer un nouveau bug</a></button></div>
+       {% elseif app.request.attributes.get('_route') == 'adminGestionBugsFixPage' %}
+         <div class="col-lg-4"><button class="main-button buttonStyle"><a href="{{ path('bugFixAdminCreationPage') }}">Créer un nouveau bug fix</a></button></div>
+       {% elseif app.request.attributes.get('_route') == 'adminGestionBugsSolutionPage' %}
+         <div class="col-lg-4"><button class="main-button buttonStyle"><a href="{{ path('bugSolutionAdminCreationPage') }}">Créer une nouvelle solution de bug</a></button></div>
+       {% elseif app.request.attributes.get('_route') == 'adminGestionEditorsPage' %}
+         <div class="col-lg-4"><button class="main-button buttonStyle"><a href="{{ path('editorAdminCreationPage') }}">Créer un nouvel éditeur</a></button></div>
+       {% elseif app.request.attributes.get('_route') == 'adminGestionGamesPage' %}
+         <div class="col-lg-4"><button class="main-button buttonStyle"><a href="{{ path('gameAdminCreationPage') }}">Créer un nouveau jeu</a></button></div>
+       {% else %}
+         <div class="col-lg-4"></div>
+       {% endif %}
+       <div class="col-lg-4"></div>
+       <div class="col-lg-4"></div>
+     </div>
+     </div>
    </div>
   </div>
  {% endblock %}

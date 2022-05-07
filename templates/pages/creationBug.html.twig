@@ -21,7 +21,7 @@
       <div class="naccs">
        <div class="grid">
         <div class="row">
-        {{ form_start(bugForm) }}
+        {{ form_start(bugForm, {'method': 'POST', 'attr':{'id': 'search-form', 'name': 'bugForm', 'class': 'bugForm'}}) }}
         <div class="col-lg-12 bugFormSpaces">
         <fieldset>
         <div class="col-lg-12 bugInsideFormSpaces">
@@ -35,103 +35,22 @@
 
         <div class="col-lg-12 bugFormSpaces">
         <h3>Données Bug</h3>
-        {{ form_row(bugForm.titleBug, {'label': 'Titre du Bug :' }) }}
-        {{ form_row(bugForm.subtitleBug, {'label': 'Sous-titre du Bug :' }) }}
-        {{ form_row(bugForm.smallTextBug, {'label': 'Texte intro du Bug :' }) }}
-        {{ form_row(bugForm.descriptionImgBug, {'label': 'Image de description :' }) }}
-        {{ form_row(bugForm.descriptionTextBug, {'label': 'Description du Bug :' }) }}
-        {{ form_row(bugForm.severityBug, {'label': 'Sévérité du Bug :' }) }}
-        {{ form_row(bugForm.frequencyBug, {'label': 'Fréquence du Bug :' }) }}
+        {{ form_row(bugForm.titleBug, {'label': 'Titre du Bug :', 'attr': {'class': 'inputBugForm'} }) }}
+        {{ form_row(bugForm.subtitleBug, {'label': 'Sous-titre du Bug :', 'attr': {'class': 'inputBugForm'} }) }}
+        {{ form_row(bugForm.smallTextBug, {'label': 'Texte intro du Bug :', 'attr': {'class': 'inputBugForm'} }) }}
+        {{ form_row(bugForm.descriptionImgBug, {'label': 'Image de description :', 'attr': {'class': 'inputBugForm'} }) }}
+        {{ form_row(bugForm.descriptionTextBug, {'label': 'Description du Bug :', 'attr': {'class': 'textareaBugCreation'} }) }}
+        {{ form_row(bugForm.severityBug, {'label': 'Sévérité du Bug :', 'attr': {'class': 'inputBugForm'} }) }}
+        {{ form_row(bugForm.frequencyBug, {'label': 'Fréquence du Bug :', 'attr': {'class': 'inputBugForm'} }) }}
         </div>
         <div class="col-lg-12 bugFormSpaces">
         <h3>Bug Fix</h3>
-        {{ form_row(bugForm.idBugFix, {'label': 'Titre du Bug :' }) }}
-        {{ form_row(bugForm.subtitleBug, {'label': 'Titre du Bug :' }) }}
-        {{ form_row(bugForm.smallTextBug, {'label': 'Titre du Bug :' }) }}
-        {{ form_row(bugForm.descriptionTextBug, {'label': 'Titre du Bug :' }) }}
-        {{ form_row(bugForm.descriptionImgBug, {'label': 'Titre du Bug :' }) }}
-        {{ form_row(bugForm.severityBug, {'label': 'Titre du Bug :' }) }}
-        {{ form_row(bugForm.frequencyBug, {'label': 'Titre du Bug :' }) }}
+        {{ form_row(bugForm.idBugFix.resolved, {'label': 'Titre du Bug :', 'attr': {'class': 'inputBugForm'} }) }}
+        {{ form_row(bugForm.idBugFix.majNumber, {'label': 'Titre du Bug :', 'attr': {'class': 'inputBugForm'} }) }}
+        {{ form_row(bugForm.idBugFix.dateBugFix, {'label': 'Titre du Bug :', 'attr': {'class': 'inputBugForm'} }) }}
         </div>
-
         {{ form_end(bugForm) }}
-         <form id="search-form" name="sB" method="submit" role="search" action="#">
-          <div class="row">
-           <div class="col-lg-12 bugFormSpaces">
-            <fieldset>
-             <div class="col-lg-12 bugInsideFormSpaces">
-              <label for="gameTitle">Jeu concerné par le bug :</label>
-              <select class="searchFormPage inputBugForm" name="gameTitle" id="gameTitle" required>
-               <option value="Skyrim">Skyrim</option>
-               <option value="AssassinsCreed3">Assassin's Creed 3</option>
-               <option value="Fifa21">Fifa 21</option>
-               <option value ="Fallout4">Fallout 4</option>
-              </select>
-             </div>
-             <div class="col-lg-12 bugInsideFormSpaces">
-              <p class="textAddGame">Le jeu concerné n'est pas dans la liste ? <a href="{{ path('gameCreationPage') }}">Ajoutez-le !</a></p>
-             </div>
-            </fieldset>
-           </div>
-
-           <div class="col-lg-12 bugFormSpaces">
-            <fieldset>
-             <div class="col-lg-12 bugInsideFormSpaces">
-              <label for="bugTitle">Titre du bug:</label>
-              <input type="text" class="inputBugForm" name="bugTitle" required>
-             </div>
-             <div class="col-lg-12 bugInsideFormSpaces">
-              <label for="bugSecondTitle">Sous-titre du bug:</label>
-              <input type="text" class="inputBugForm" name="bugSecondTitle" required>
-             </div>
-             <div class="col-lg-12 bugInsideFormSpaces">
-              <label for="bugIntroText">Texte intro bug:</label>
-              <input type="text" class="inputBugForm" name="bugIntroText" required>
-             </div>
-             <div class="col-lg-12 bugInsideFormSpaces">
-              <label for="bugImage">Image bug:</label>
-              <input type="file" name="bugImage" required>
-             </div>
-             <div class="col-lg-12 bugInsideFormSpaces">
-              <label for="bugSeverity">Sévérité bug:</label>
-              <select class="searchFormPage inputBugForm" name="bugSeverity" id="bugSeverity" required>
-               <option value="insignificant">Insignifiant</option>
-               <option value="small">Faible</option>
-               <option value="moderate">Modéré</option>
-               <option value ="strong">Fort</option>
-               <option value ="deadly/heavy">Jeux condamné/lourdement impacté</option>
-              </select>
-             </div>
-             <div class="col-lg-12 bugInsideFormSpaces">
-              <label for="bugFrequency">Fréquence bug:</label>
-              <select class="searchFormPage inputBugForm" name="bugFrequency" id="bugFrequency" required>
-               <option value="exceptionnal">Exceptionnel</option>
-               <option value="rare">Rare</option>
-               <option value="sometimes">Peu courant</option>
-               <option value ="often">Assez régulier</option>
-               <option value ="regulary">Fréquent</option>
-               <option value ="always">Systématique</option>
-              </select>
-             </div>
-             <div class="col-lg-12 bugInsideFormSpaces">
-              <label for="bugText">Texte bug:</label>
-              <textarea id="bugText" class="textareaBugCreation" name="bugText"></textarea>
-             </div>
-             <div class="col-lg-12 bugInsideFormSpaces">
-              <label for="gameEditor">Bug résolu ?</label>
-              <input type="checkbox" class="leftCheckbox" name="gameEditor">
-             </div>
-            </fieldset>
-           </div>
-           
-           <div class="col-lg-4"></div>
-           <div class="col-lg-4"></div>
-           <div class="col-lg-4">
-            <button><input type="submit" name="submitBugButton"></button>
-           </div>
-
-          </div>
-         </form>
+         
         </div>
        </div>
       </div>

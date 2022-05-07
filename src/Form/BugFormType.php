@@ -23,10 +23,7 @@ class BugFormType extends AbstractType
                 'class' => Game::class,
                 'choice_label' => 'nameGame'
             ])
-            ->add('idBugFix', EntityType::class, [
-                'class' => BugFix::class,
-                'choice_label' => 'BugFix'
-            ])
+            ->add('idBugFix', BugFixFormType::class)
             ->add('subtitleBug')
             ->add('smallTextBug')
             ->add('descriptionTextBug')
@@ -37,7 +34,7 @@ class BugFormType extends AbstractType
                     new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [
-                            'image/*'
+                            'images/*'
                         ]
                     ])
                 ]

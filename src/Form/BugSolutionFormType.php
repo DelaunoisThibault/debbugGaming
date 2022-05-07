@@ -14,6 +14,7 @@ class BugSolutionFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('titleBugSolution')
             ->add('textBugSolution')
             ->add('imgBugSolution', FileType::class, [
                 'mapped' => false,

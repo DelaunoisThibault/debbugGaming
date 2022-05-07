@@ -29,6 +29,17 @@ class GameRepository extends ServiceEntityRepository
             ;
     }
 
+    public function findByEditorId($idEditor)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.idEditor = :val')
+            ->setParameter('val', $idEditor)
+            ->orderBy('r.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function findAllBugFromSingleGame(){
 
         /*$query = $em->createQuery('SELECT u, p FROM Game u JOIN u.Bug p');

@@ -31,6 +31,17 @@ class CommentRepository extends ServiceEntityRepository
             ;
     }
 
+    public function findByUserId($idUser)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.idBug = :val')
+            ->setParameter('val', $idUser)
+            ->orderBy('r.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Comment[] Returns an array of Comment objects
     //  */

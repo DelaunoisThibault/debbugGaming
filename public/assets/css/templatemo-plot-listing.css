@@ -1012,6 +1012,10 @@ form#search-form button i {
     margin-right: 10px;
 }
 
+button a {
+    color : #fff;
+}
+
 .searchText {
     border: none!important;
 }

@@ -43,12 +43,44 @@ class BugController extends AbstractController
             }
             $bug = $bugForm->getData();
 
-            $totalBugsForGame = $bugRepository->createQueryBuilder('a')
-            ->where('a.idGame = $game')
-            ->select('count(a.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
-            $bugRate = ($totalBugsForGame);
+            /** @var \App\Entity\User $user */
+            $user = $this->getUser();
+            $bug->setIdUser($user);
+
+            $gameRelated = $bug->getIdGame();
+            $allBugsFromGame = $bugRepository->findByGameId($gameRelated);
+            $bugCount = count($allBugsFromGame);
+            if($bugCount <=  2){
+                $gameRelated->setNameGame($gameRelated->getNameGame());
+                $gameRelated->setYearOfPublication($gameRelated->getYearOfPublication());
+                $gameRelated->setIdEditor($gameRelated->getIdEditor());
+                $gameRelated->setBugRating(0);
+            } elseif($bugCount <=  4 && $bugCount > 2){
+                $gameRelated->setNameGame($gameRelated->getNameGame());
+                $gameRelated->setYearOfPublication($gameRelated->getYearOfPublication());
+                $gameRelated->setIdEditor($gameRelated->getIdEditor());
+                $gameRelated->setBugRating(1);
+            } elseif($bugCount <=  6 && $bugCount > 4) {
+                $gameRelated->setNameGame($gameRelated->getNameGame());
+                $gameRelated->setYearOfPublication($gameRelated->getYearOfPublication());
+                $gameRelated->setIdEditor($gameRelated->getIdEditor());
+                $gameRelated->setBugRating(2);
+            } elseif($bugCount <=  8 && $bugCount > 6) {
+                $gameRelated->setNameGame($gameRelated->getNameGame());
+                $gameRelated->setYearOfPublication($gameRelated->getYearOfPublication());
+                $gameRelated->setIdEditor($gameRelated->getIdEditor());
+                $gameRelated->setBugRating(3);
+            } elseif($bugCount <=  10 && $bugCount > 8) {
+                $gameRelated->setNameGame($gameRelated->getNameGame());
+                $gameRelated->setYearOfPublication($gameRelated->getYearOfPublication());
+                $gameRelated->setIdEditor($gameRelated->getIdEditor());
+                $gameRelated->setBugRating(4);
+            } else {
+                $gameRelated->setNameGame($gameRelated->getNameGame());
+                $gameRelated->setYearOfPublication($gameRelated->getYearOfPublication());
+                $gameRelated->setIdEditor($gameRelated->getIdEditor());
+                $gameRelated->setBugRating(5);
+            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($bug);
@@ -58,8 +90,6 @@ class BugController extends AbstractController
                 'id' => $bug->getId()
             ]);
         }
-
-        
 
         return $this->render('pages/creationBug.html.twig', [
             'pageTitle' => 'Créer/mettre à jour un bug',
@@ -72,18 +102,15 @@ class BugController extends AbstractController
      * @Route("/bugSolution/new", name="bugSolutionCreationPage")
      * @Route("/bugSolution/update/{id<\d+>}", name="bugSolutionUpdatePage")
      */
-    public function bugSolutionForm(Request $request, BugSolution $bugSolution = null, FileUploader $fileUploader, EntityManagerInterface $manager, BugRepository $bugRepository, 
-    GameRepository $gameRepository): Response
+    public function bugSolutionForm(Request $request, BugSolution $bugSolution = null, FileUploader $fileUploader, EntityManagerInterface $manager, 
+    BugRepository $bugRepository): Response
     {
         $bug= $bugSolution->getIdBug();
         if(!$bugSolution){
             $bugSolution = new BugSolution;
-            $bugSolution->setIdBug($bug);
         }
         $bugSolutionForm = $this->createForm(BugSolutionFormType::class, $bugSolution);
         
-        
-
         $bugSolutionForm->handleRequest($request);
         if(($bugSolutionForm->isSubmitted() && $bugSolutionForm->isValid())){
             /** @var UploadedFile $avatarFile */
@@ -92,8 +119,8 @@ class BugController extends AbstractController
                 $imageFileName = $fileUploader->uploadImageFromForm($imageFile);
                 $bugSolution->setImgBugSolution($imageFileName);
             }
-
             $bugSolution = $bugSolutionForm->getData();
+            $bugSolution->setIdBug($bug);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($bugSolution);

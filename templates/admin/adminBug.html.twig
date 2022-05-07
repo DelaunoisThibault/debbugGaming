@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+ {% block content %}
+  <div class="page-heading">
+   <div class="container">
+    <div class="row">
+     <div class="col-lg-4"></div>
+     <div class="col-lg-8">
+      <div class="top-text header-text">
+       <h2>Créer/Modifier un bug</h2>
+      </div>
+     </div>
+     <div class="col-lg-4"></div>
+    </div>
+   </div>
+  </div>
+
+  <div class="listing-page">
+   <div class="container">
+    <div class="row">
+     <div class="col-lg-12">
+      <div class="naccs">
+       <div class="grid">
+        <div class="row">
+
+
+          {{ form_start(bugForm, {'method': 'POST', 'attr':{'id': 'search-form', 'name': 'commentForm', 'class': 'commentForm'}}) }}
+          <div class="row">
+
+
+           <div class="col-lg-12 bugFormSpaces">
+            <fieldset>
+             <div class="col-lg-12 bugInsideFormSpaces">
+              {{ form_row(bugForm.idGame, {'label':'Jeu :', 'attr': {'class': 'inputBugForm'}}) }}
+              {{ form_row(bugForm.idUser, {'label':'Utilisateur lié :', 'attr': {'class': 'inputBugForm'}}) }}
+              {{ form_row(bugForm.titleBug, {'label':'Titre :', 'attr': {'class': 'inputBugForm'}}) }}
+              {{ form_row(bugForm.subtitleBug, {'label':'Sous-titre :', 'attr': {'class': 'inputBugForm'}}) }}
+              {{ form_row(bugForm.smallTextBug, {'label':'Texte court :', 'attr': {'class': 'inputBugForm'}}) }}
+              {{ form_row(bugForm.descriptionTextBug, {'label':'Texte :', 'attr': {'class': 'textareaBugCreation'}}) }}
+              {{ form_row(bugForm.descriptionImgBug, {'label':'Image :', 'attr': {'class': 'inputBugForm'}}) }}
+              {{ form_row(bugForm.severityBug, {'label':'Sévérité du bug :', 'attr': {'class': 'inputBugForm'}}) }}
+              {{ form_row(bugForm.frequencyBug, {'label':'Fréquence du bug :', 'attr': {'class': 'inputBugForm'}}) }}
+              {{ form_row(bugForm.published, {'label':'Publié :', 'attr': {'class': 'inputBugForm'}}) }}
+             </div>
+
+            </fieldset>
+           </div>
+
+           <div class="col-lg-4"></div>
+           <div class="col-lg-4"></div>
+           <div class="col-lg-4">
+            <button><input type="submit" name="submitBugButton"></button>
+           </div>
+
+          </div>
+          {{ form_end(bugForm) }}
+
+
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+{% endblock %}

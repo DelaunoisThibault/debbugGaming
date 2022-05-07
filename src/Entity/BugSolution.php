@@ -33,6 +33,11 @@ class BugSolution
      */
     private $imgBugSolution;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $titleBugSolution;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +75,18 @@ class BugSolution
     public function setImgBugSolution(string $imgBugSolution): self
     {
         $this->imgBugSolution = $imgBugSolution;
+
+        return $this;
+    }
+
+    public function getTitleBugSolution(): ?string
+    {
+        return $this->titleBugSolution;
+    }
+
+    public function setTitleBugSolution(string $titleBugSolution): self
+    {
+        $this->titleBugSolution = $titleBugSolution;
 
         return $this;
     }

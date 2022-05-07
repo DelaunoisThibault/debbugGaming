@@ -29,8 +29,27 @@ class BugRepository extends ServiceEntityRepository
             ;
     }
 
+    public function findByGameId($idGame)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.idGame = :val')
+            ->setParameter('val', $idGame)
+            ->orderBy('r.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
-
+    public function findByUserId($idUser)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.idGame = :val')
+            ->setParameter('val', $idUser)
+            ->orderBy('r.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
     // /**
     //  * @return Bug[] Returns an array of Bug objects

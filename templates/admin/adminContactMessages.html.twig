@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+ {% block content %}
+  <div class="page-heading">
+   <div class="container">
+    <div class="row">
+     <div class="col-lg-8">
+      <div class="top-text header-text">
+       <h2>Message de contact</h2>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+
+  <div class="contact-page">
+   <div class="container">
+    <div class="row">
+     <div class="col-lg-12">
+      <div class="inner-content">
+       
+       <div class="row connectInscript">
+        <p>Créer ou changer un message de contact :</p>
+        {{ form_start(contactForm, {'method': 'POST', 'attr':{'id': 'search-form', 'class':'limitPadding', 'name': 'gs'}}) }}
+
+         <div class="row searchFormPage">
+          <fieldset>
+           {{ form_row(contactForm.nameContactMessage, {'label':'Votre nom (ou pseudonyme) :', 'attr': {'class':'searchText contactEmailInput'}}) }}
+           {{ form_row(contactForm.mailContact, {'label':'Adresse email :', 'attr': {'class':'searchText contactEmailInput'}}) }}
+           {{ form_row(contactForm.textContactMessage, {'label':'Votre message :', 'attr': {'id': 'contactText', 'class':'textareaBugCreation'}}) }}
+
+          </fieldset>
+          <button class="main-button bugInsideFormSpaces"> Envoyer</button>
+         </div>
+        {{ form_end(contactForm) }}
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ {% endblock %}
