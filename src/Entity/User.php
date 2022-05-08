@@ -63,7 +63,7 @@ class User implements UserInterface
     private $locked;
 
     /**
-     * @ORM\OneToMany(targetEntity=Bug::class, mappedBy="idUser")
+     * @ORM\OneToMany(targetEntity=Bug::class, mappedBy="idUser", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $bugs;
 

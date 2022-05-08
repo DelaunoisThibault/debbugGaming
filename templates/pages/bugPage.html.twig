@@ -36,37 +36,37 @@
        <p>Titre : {{ game.nameGame }}</p>
        <p>Editeur : {{ editor.editorName }}</p>
        <p>Année de publication : {{ game.yearOfPublication }}</p>
-       <p>Taux de bugs : {% if game.bugRating == 0 %}
+       <p>Taux de bugs : {% if game.bugRating == 5 %}
         <span class="fa fa-star badChecked"></span>
         <span class="fa fa-star badChecked"></span>
         <span class="fa fa-star badChecked"></span>
         <span class="fa fa-star badChecked"></span>
         <span class="fa fa-star badChecked"></span>
-        {% elseif game.bugRating == 1 %}
+        {% elseif game.bugRating == 4 %}
         <span class="fa fa-star goodChecked"></span>
         <span class="fa fa-star badChecked"></span>
-        <span class="fa fa-star badChecked"></span>
-        <span class="fa fa-star badChecked"></span>
-        <span class="fa fa-star badChecked"></span>
-        {% elseif game.bugRating == 2 %}
-        <span class="fa fa-star goodChecked"></span>
-        <span class="fa fa-star goodChecked"></span>
         <span class="fa fa-star badChecked"></span>
         <span class="fa fa-star badChecked"></span>
         <span class="fa fa-star badChecked"></span>
         {% elseif game.bugRating == 3 %}
         <span class="fa fa-star goodChecked"></span>
         <span class="fa fa-star goodChecked"></span>
+        <span class="fa fa-star badChecked"></span>
+        <span class="fa fa-star badChecked"></span>
+        <span class="fa fa-star badChecked"></span>
+        {% elseif game.bugRating == 2 %}
+        <span class="fa fa-star goodChecked"></span>
+        <span class="fa fa-star goodChecked"></span>
         <span class="fa fa-star goodChecked"></span>
         <span class="fa fa-star badChecked"></span>
         <span class="fa fa-star badChecked"></span>
-        {% elseif game.bugRating == 4 %}
+        {% elseif game.bugRating == 1 %}
         <span class="fa fa-star goodChecked"></span>
         <span class="fa fa-star goodChecked"></span>
         <span class="fa fa-star goodChecked"></span>
         <span class="fa fa-star goodChecked"></span>
         <span class="fa fa-star badChecked"></span>
-        {% elseif game.bugRating == 5 %}
+        {% elseif game.bugRating == 0 %}
         <span class="fa fa-star goodChecked"></span>
         <span class="fa fa-star goodChecked"></span>
         <span class="fa fa-star goodChecked"></span>
@@ -98,18 +98,22 @@
        <p>{{ bug.descriptionTextBug }}
        </p>
       </div>
-      <div class="col-lg-4"><button class="main-button buttonStyle">Modifier les informations sur le bug</button></div>
+      <div class="col-lg-4">
+      <a href="{{ path('bugUpdatePage', {'id': bug.id}) }}"><button class="main-button buttonStyle">Modifier les informations sur le bug</button></a>
+      </div>
       <div class="col-lg-8"></div>
      </div>
 
      <div class="row bugBlockSpaces">
      <h2>Solution(s) existante(s) :</h2>
      {% if bugSolutions is empty %}
+     <div class="col-lg-12 bugInsideFormSpaces">
        <div class="col-lg-4"></div>
         <div class="col-lg-4">
           <p>Aucune solution répertoriée pour l'instant.</p>
         </div>
        <div class="col-lg-4"></div>
+       </div>
      {% else %}
        {% for bugSolution in bugSolutions %}
         <div class="col-lg-4"></div>
@@ -122,18 +126,22 @@
          <p>{{ bugSolution.textBugSolution }}</p>
         </div>
 
-        <div class="col-lg-4"><button class="main-button buttonStyle">Modifier la solution</button></div>
-        <div class="col-lg-4"><button class="main-button buttonStyle">Supprimer la solution</button></div>
-        <div class="col-lg-4"></div>
+        
+        <div class="col-lg-4 bugInsideFormSpaces">
+        <a href="{{ path('bugSolutionUpdatePage', {'id': bugSolution.id}) }}"><button class="main-button buttonStyle">Modifier la solution</button></a>
+        </div>
+        <div class="col-lg-4 bugInsideFormSpaces"><a href="{{ path('deleteBugSolution', {'id': bugSolution.id}) }}"><button class="main-button buttonStyle">Supprimer la solution</button></a></div>
+        <div class="col-lg-4 bugInsideFormSpaces"></div>
+       
         
        {% endfor %}
 
       {% endif %}
-      
+      <a href="{{ path('bugSolutionCreationPage', {'idBug':bug.id}) }}"><button class="main-button buttonStyle">Ajouter une solution</button></a>
      </div>
 
      <div class="row bugBlockSpaces">
-      <div class="col-lg-4"><button class="main-button buttonStyle">Supprimer le bug</button></div>
+      <div class="col-lg-4"><a href="{{ path('deleteBug', {'id': bug.id}) }}"><button class="main-button buttonStyle">Supprimer le bug</button></a></div>
       <div class="col-lg-8"></div>
      </div>
 
@@ -156,8 +164,8 @@
        <p>{{ comment.textComments }}</p>
       </div>
       <div class="col-lg-12 bugPageBetweenSpaces">
-       <button class="btn btn-primary">Modifier</button>
-       <button class="btn btn-primary">Supprimer</button>
+       <a href="{{ path('updateComment', {'id': comment.id}) }}"><button class="btn btn-primary">Modifier</button></a>
+       <a href="{{ path('deleteComment', {'id': comment.id}) }}"><button class="btn btn-primary">Supprimer</button></a>
       </div>
       {% endfor %}
 

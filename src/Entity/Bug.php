@@ -31,7 +31,7 @@ class Bug
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="bugs")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $idUser;
 

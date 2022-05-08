@@ -248,13 +248,54 @@ class AdminController extends AbstractController
             );
         }
 
-        $entityManager->remove($bugFix);
-        foreach ($bugSolutions as $bugSolution){
-            $entityManager->remove($bugSolution);
+        if($bugFix){
+            $entityManager->remove($bugFix);
         }
-        foreach ($comments as $comment){
-            $entityManager->remove($comment);
+        if($bugSolutions){
+            foreach ($bugSolutions as $bugSolution){
+                $entityManager->remove($bugSolution);
+            }
         }
+        if($comments){
+            foreach ($comments as $comment){
+                $entityManager->remove($comment);
+            }
+        }
+        
+        $gameRelated = $bug->getIdGame();
+            $allBugsFromGame = $bugRepo->findByGameId($gameRelated);
+            $bugCount = (count($allBugsFromGame))-1;
+            if($bugCount <=  2){
+                $gameRelated->setNameGame($gameRelated->getNameGame());
+                $gameRelated->setYearOfPublication($gameRelated->getYearOfPublication());
+                $gameRelated->setIdEditor($gameRelated->getIdEditor());
+                $gameRelated->setBugRating(0);
+            } elseif($bugCount <=  4 && $bugCount > 2){
+                $gameRelated->setNameGame($gameRelated->getNameGame());
+                $gameRelated->setYearOfPublication($gameRelated->getYearOfPublication());
+                $gameRelated->setIdEditor($gameRelated->getIdEditor());
+                $gameRelated->setBugRating(1);
+            } elseif($bugCount <=  6 && $bugCount > 4) {
+                $gameRelated->setNameGame($gameRelated->getNameGame());
+                $gameRelated->setYearOfPublication($gameRelated->getYearOfPublication());
+                $gameRelated->setIdEditor($gameRelated->getIdEditor());
+                $gameRelated->setBugRating(2);
+            } elseif($bugCount <=  8 && $bugCount > 6) {
+                $gameRelated->setNameGame($gameRelated->getNameGame());
+                $gameRelated->setYearOfPublication($gameRelated->getYearOfPublication());
+                $gameRelated->setIdEditor($gameRelated->getIdEditor());
+                $gameRelated->setBugRating(3);
+            } elseif($bugCount <=  10 && $bugCount > 8) {
+                $gameRelated->setNameGame($gameRelated->getNameGame());
+                $gameRelated->setYearOfPublication($gameRelated->getYearOfPublication());
+                $gameRelated->setIdEditor($gameRelated->getIdEditor());
+                $gameRelated->setBugRating(4);
+            } else {
+                $gameRelated->setNameGame($gameRelated->getNameGame());
+                $gameRelated->setYearOfPublication($gameRelated->getYearOfPublication());
+                $gameRelated->setIdEditor($gameRelated->getIdEditor());
+                $gameRelated->setBugRating(5);
+            }
         $entityManager->remove($bug);
             
 
@@ -735,7 +776,7 @@ class AdminController extends AbstractController
             );
         }
 
-        $entityManager->remove($user);
+        
         foreach ($bugs as $bug){
             $bugSolutions = $bugSolutionRepo->findByBugId($bug);
             $bugFix = $bug->getIdBugFix();
@@ -758,8 +799,43 @@ class AdminController extends AbstractController
                     $entityManager->remove($bugComment);
                 }
             }
+            $gameRelated = $bug->getIdGame();
+            $allBugsFromGame = $bugRepo->findByGameId($gameRelated);
+            $bugCount = (count($allBugsFromGame))-1;
+            if($bugCount <=  2){
+                $gameRelated->setNameGame($gameRelated->getNameGame());
+                $gameRelated->setYearOfPublication($gameRelated->getYearOfPublication());
+                $gameRelated->setIdEditor($gameRelated->getIdEditor());
+                $gameRelated->setBugRating(0);
+            } elseif($bugCount <=  4 && $bugCount > 2){
+                $gameRelated->setNameGame($gameRelated->getNameGame());
+                $gameRelated->setYearOfPublication($gameRelated->getYearOfPublication());
+                $gameRelated->setIdEditor($gameRelated->getIdEditor());
+                $gameRelated->setBugRating(1);
+            } elseif($bugCount <=  6 && $bugCount > 4) {
+                $gameRelated->setNameGame($gameRelated->getNameGame());
+                $gameRelated->setYearOfPublication($gameRelated->getYearOfPublication());
+                $gameRelated->setIdEditor($gameRelated->getIdEditor());
+                $gameRelated->setBugRating(2);
+            } elseif($bugCount <=  8 && $bugCount > 6) {
+                $gameRelated->setNameGame($gameRelated->getNameGame());
+                $gameRelated->setYearOfPublication($gameRelated->getYearOfPublication());
+                $gameRelated->setIdEditor($gameRelated->getIdEditor());
+                $gameRelated->setBugRating(3);
+            } elseif($bugCount <=  10 && $bugCount > 8) {
+                $gameRelated->setNameGame($gameRelated->getNameGame());
+                $gameRelated->setYearOfPublication($gameRelated->getYearOfPublication());
+                $gameRelated->setIdEditor($gameRelated->getIdEditor());
+                $gameRelated->setBugRating(4);
+            } else {
+                $gameRelated->setNameGame($gameRelated->getNameGame());
+                $gameRelated->setYearOfPublication($gameRelated->getYearOfPublication());
+                $gameRelated->setIdEditor($gameRelated->getIdEditor());
+                $gameRelated->setBugRating(5);
+            }
             $entityManager->remove($bug);
         }
+        $entityManager->remove($user);
        
         $entityManager->flush();
 
