@@ -49,7 +49,13 @@
                                     <!-- ***** Menu Start ***** -->
                                     <ul class="nav">
                                         <li><a href="{{ path('bugSearchPage') }}">Tous les bugs</a></li>
+                                        {% if not app.user %}
+
+                                        {% elseif app.user.isVerified == false or app.user.locked == true %}
+                                        
+                                        {% else %}
                                         <li><a href="{{ path('bugCreationPage') }}">Proposer un bug</a></li>
+                                        {% endif %}
                                         <li>
                                             <div class="navSearchBar col-lg-12">
                                                 <form id="search-form" class="navSearchForm" name="gs" method="POST" role="search" action="#">
@@ -70,8 +76,17 @@
                                                 </form>
                                             </div>
                                         </li>
+                                        {% if not app.user %}
                                         <li><a href="{{ path('app_register') }}">Inscription</a></li>
                                         <li><a href="{{ path('connectionPage') }}">Connexion</a></li>
+                                        {% else %}
+                                        {% if app.user.isVerified == false %}
+                                          <li><a href="{{ path('waitingProfileActivationPage') }}">Profil</a> </li>
+                                        {% else %}
+                                          <li class="{% if app.request.attributes.get('_route') == 'profilePage' %}active{% endif %}"><a href="{{ path('profilePage') }}">Profil</a></li>
+                                        {% endif %}
+                                          <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                                        {% endif %}
                                         <li>
                                             <div>
                                                 <p></p>
@@ -107,7 +122,11 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="helpful-links">
+                                {% if is_granted('ROLE_ADMIN') %}
                                     <a href="{{ path('adminGestionBugsPage') }}">Gestion Admin</a>
+                                    {% else %}
+                                    
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="col-lg-2">

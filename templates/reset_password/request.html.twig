@@ -27,15 +27,19 @@
     <h1>Reset your password</h1>
 
     {{ form_start(requestForm) }}
-        {{ form_row(requestForm.email) }}
+    <fieldset>
+        {{ form_row(requestForm.email, {'label':'Email : ', 'attr': {'class': 'inputBugForm'}}) }}
         <div>
             <small>
                 Enter your email address and we we will send you a
                 link to reset your password.
             </small>
         </div>
-
-        <button class="btn btn-primary">Send password reset email</button>
+        <div class="col-lg-3"><button class="main-button buttonStyle">Send password reset email</button></div>
+        <div class="col-lg-5"></div>
+        <div class="col-lg-4"></div>
+        
+        </fieldset>
     {{ form_end(requestForm) }}
 
     </div>

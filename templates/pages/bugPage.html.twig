@@ -85,7 +85,7 @@
        {% if bugFix is empty %}
          <p>Résolution suite à une MAJ : Pas de données </p>
        {% else %}
-         {% if "{{ bugFix.resolved }}" == true %}
+         {% if bugFix.resolved == true %}
            <p>Résolution suite à une MAJ : Oui </p>
            <p>Numéro MàJ : {{ bugFix.majNumber }}</p>
            <p>Date MàJ : {{ bugFix.dateBugFix | date("d/m/Y") }}</p>
@@ -98,78 +98,132 @@
        <p>{{ bug.descriptionTextBug }}
        </p>
       </div>
-      <div class="col-lg-4">
-      <a href="{{ path('bugUpdatePage', {'id': bug.id}) }}"><button class="main-button buttonStyle">Modifier les informations sur le bug</button></a>
-      </div>
-      <div class="col-lg-8"></div>
-     </div>
-
-     <div class="row bugBlockSpaces">
-     <h2>Solution(s) existante(s) :</h2>
-     {% if bugSolutions is empty %}
-     <div class="col-lg-12 bugInsideFormSpaces">
-       <div class="col-lg-4"></div>
+      {% if app.user and app.user.isVerified == true and app.user.locked == false and bug.idUser == app.user %}
         <div class="col-lg-4">
-          <p>Aucune solution répertoriée pour l'instant.</p>
+          <a href="{{ path('bugUpdatePage', {'id': bug.id}) }}"><button class="main-button buttonStyle">Modifier les informations sur le bug</button></a>
         </div>
-       <div class="col-lg-4"></div>
-       </div>
-     {% else %}
-       {% for bugSolution in bugSolutions %}
-        <div class="col-lg-4"></div>
+        <div class="col-lg-8"></div>
+      {% elseif is_granted('ROLE_ADMIN') %}
         <div class="col-lg-4">
-          <img src="{{ asset('assets/images/' ~bugSolution.imgBugSolution) }}" alt="">
+          <a href="{{ path('bugUpdatePage', {'id': bug.id}) }}"><button class="main-button buttonStyle">Modifier les informations sur le bug</button></a>
         </div>
-        <div class="col-lg-4"></div>
-
-        <div class="col-lg-12">
-         <p>{{ bugSolution.textBugSolution }}</p>
-        </div>
-
-        
-        <div class="col-lg-4 bugInsideFormSpaces">
-        <a href="{{ path('bugSolutionUpdatePage', {'id': bugSolution.id}) }}"><button class="main-button buttonStyle">Modifier la solution</button></a>
-        </div>
-        <div class="col-lg-4 bugInsideFormSpaces"><a href="{{ path('deleteBugSolution', {'id': bugSolution.id}) }}"><button class="main-button buttonStyle">Supprimer la solution</button></a></div>
-        <div class="col-lg-4 bugInsideFormSpaces"></div>
-       
-        
-       {% endfor %}
-
+        <div class="col-lg-8"></div>
       {% endif %}
-      <a href="{{ path('bugSolutionCreationPage', {'idBug':bug.id}) }}"><button class="main-button buttonStyle">Ajouter une solution</button></a>
      </div>
 
      <div class="row bugBlockSpaces">
-      <div class="col-lg-4"><a href="{{ path('deleteBug', {'id': bug.id}) }}"><button class="main-button buttonStyle">Supprimer le bug</button></a></div>
-      <div class="col-lg-8"></div>
+       <h2>Solution(s) existante(s) :</h2>
+       {% if bugSolutions is empty %}
+       <div class="col-lg-12 bugInsideFormSpaces">
+         <div class="col-lg-4"></div>
+          <div class="col-lg-4">
+            <p>Aucune solution répertoriée pour l'instant.</p>
+          </div>
+         <div class="col-lg-4"></div>
+         </div>
+       {% else %}
+         {% for bugSolution in bugSolutions %}
+          <div class="col-lg-4"></div>
+          <div class="col-lg-4">
+            <img src="{{ asset('assets/images/' ~bugSolution.imgBugSolution) }}" alt="">
+          </div>
+          <div class="col-lg-4"></div>
+
+          <div class="col-lg-12">
+           <p>{{ bugSolution.textBugSolution }}</p>
+          </div>
+
+          {% if app.user and app.user.isVerified == true and app.user.locked == false and bug.idUser == app.user %}
+            <div class="col-lg-4 bugInsideFormSpaces">
+              <a href="{{ path('bugSolutionUpdatePage', {'id': bugSolution.id}) }}"><button class="main-button buttonStyle">Modifier la solution</button></a>
+            </div>
+            <div class="col-lg-4 bugInsideFormSpaces"><a href="{{ path('deleteBugSolution', {'id': bugSolution.id}) }}"><button class="main-button buttonStyle">Supprimer la solution</button></a></div>
+            <div class="col-lg-4 bugInsideFormSpaces"></div>
+          {% elseif is_granted('ROLE_ADMIN') %}
+            <div class="col-lg-4 bugInsideFormSpaces">
+              <a href="{{ path('bugSolutionUpdatePage', {'id': bugSolution.id}) }}"><button class="main-button buttonStyle">Modifier la solution</button></a>
+            </div>
+            <div class="col-lg-4 bugInsideFormSpaces"><a href="{{ path('deleteBugSolution', {'id': bugSolution.id}) }}"><button class="main-button buttonStyle">Supprimer la solution</button></a></div>
+            <div class="col-lg-4 bugInsideFormSpaces"></div>
+         {% endif %}
+         {% endfor %}
+
+       {% endif %}
+       {% if app.user and app.user.isVerified == true and app.user.locked == false and bug.idUser == app.user %}
+         <div class="col-lg-4">
+           <a href="{{ path('bugSolutionCreationPage', {'idBug':bug.id}) }}"><button class="main-button buttonStyle">Ajouter une solution</button></a>
+         </div>
+         <div class="col-lg-4"></div>
+         <div class="col-lg-4"></div>
+       {% elseif is_granted('ROLE_ADMIN') %}
+         <div class="col-lg-4">
+           <a href="{{ path('bugSolutionCreationPage', {'idBug':bug.id}) }}"><button class="main-button buttonStyle">Ajouter une solution</button></a>
+         </div>
+         <div class="col-lg-4"></div>
+         <div class="col-lg-4"></div>
+       {% endif %}
      </div>
 
-     <div class="row bugBlockSpaces">
+     {% if app.user and app.user.isVerified == true and app.user.locked == false and bug.idUser == app.user %}
+       <div class="row bugBlockSpaces">
+        <div class="col-lg-4"><a href="{{ path('deleteBug', {'id': bug.id}) }}"><button class="main-button buttonStyle">Supprimer le bug</button></a></div>
+        <div class="col-lg-8"></div>
+       </div>
+     {% elseif is_granted('ROLE_ADMIN') %}
+       <div class="row bugBlockSpaces">
+        <div class="col-lg-4"><a href="{{ path('deleteBug', {'id': bug.id}) }}"><button class="main-button buttonStyle">Supprimer le bug</button></a></div>
+        <div class="col-lg-8"></div>
+       </div>
+      {% endif %}
 
+     <div class="row bugBlockSpaces">
       <div class="col-lg-4"></div>
       <div class="col-lg-4">
        <h2>Commentaires</h2>
       </div>
       <div class="col-lg-4"></div>
-
       <div class="bugPageBetweenSpaces">
+      </div>
 
-      </div>
       {% for comment in comments %}
-      <div class="col-lg-2">
-       <img src="{{ asset('images/' ~ comment.idUser.avatar) }}" alt="">
-      </div>
-      <div class="col-lg-10">
-       <p>{{ comment.textComments }}</p>
-      </div>
-      <div class="col-lg-12 bugPageBetweenSpaces">
-       <a href="{{ path('updateComment', {'id': comment.id}) }}"><button class="btn btn-primary">Modifier</button></a>
-       <a href="{{ path('deleteComment', {'id': comment.id}) }}"><button class="btn btn-primary">Supprimer</button></a>
-      </div>
+        <div class="col-lg-2">
+         <img src="{{ asset('assets/images/' ~ comment.idUser.avatar) }}" alt="">
+        </div>
+        <div class="col-lg-10">
+         <p>{{ comment.textComments }}</p>
+        </div>
+        <div class="col-lg-12 bugPageBetweenSpaces">
+          <div class="row">
+            {% if app.user and app.user.isVerified == true and app.user.locked == false and comment.idUser == app.user %}
+              <div class="col-lg-2"><a href="{{ path('updateComment', {'id': comment.id}) }}"><button class="main-button buttonStyle">Modifier</button></a></div>
+              <div class="col-lg-2"><a href="{{ path('deleteComment', {'id': comment.id}) }}"><button class="main-button buttonStyle">Supprimer</button></a></div>
+              <div class="col-lg-8"></div>
+            {% elseif is_granted('ROLE_ADMIN') %}
+              <div class="col-lg-2"><a href="{{ path('updateComment', {'id': comment.id}) }}"><button class="main-button buttonStyle">Modifier</button></a></div>
+              <div class="col-lg-2"><a href="{{ path('deleteComment', {'id': comment.id}) }}"><button class="main-button buttonStyle">Supprimer</button></a></div>
+              <div class="col-lg-8"></div>
+            {% else %}
+          {% endif %}
+          </div>
+        </div>
       {% endfor %}
 
       <div class="col-lg-12">
+      {% if not app.user %}
+        <div class="connectionRequiredMessage">
+          <p class="textCommRequ">Seules les personnes connectées peuvent laisser des commentaires.
+            <a href="{{ path('connectionPage') }}">Connectez-vous</a> ou <a href="{{ path('app_register') }}">inscrivez-vous</a>.
+          </p>
+        </div>
+       {% elseif app.user.locked == true %}
+          <div class="connectionRequiredMessage">
+            <p class="textCommRequ">Vous ne pouvez laisser des commentaires car vous avez été bloqué. Veuillez contacter le(s) administrateur/trice(s) pour discuter de cette décision.</p>
+          </div>
+        {% elseif app.user.isVerified == false %}
+          <div class="connectionRequiredMessage">
+            <p class="textCommRequ">Vous ne pouvez laisser des commentaires car votre compte n'a pas encore été validé. Veuillez utiliser le lien reçu en email pour activer votre  compte.</p>
+          </div>
+        {% else %}
        <h2>Laisser un commentaire</h2>
         {{ form_start(commentsForm, {'method': 'POST', 'attr':{'id': 'search-form', 'name': 'commentForm', 'class': 'commentForm'}}) }}
         <fieldset>
@@ -177,6 +231,7 @@
          <button class="main-button commentButton"><input type="submit" name="commentFormSubmit"></button>
         </fieldset>
         {{ form_end(commentsForm) }}
+        {% endif %}
 
       </div>
      </div>

@@ -34,7 +34,7 @@ class BugFormType extends AbstractType
                     new File([
                         'maxSize' => '1024k',
                         'mimeTypes' => [
-                            'images/*'
+                            'image/*'
                         ]
                     ])
                 ]

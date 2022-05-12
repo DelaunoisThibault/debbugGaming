@@ -29,6 +29,17 @@ class BugRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @return \Doctrine\ORM\Query
+     */
+    public function findAllPublishedByRecent(){
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.published = true')
+            ->orderBy('s.id', 'DESC')
+            ->getQuery()
+            ;
+    }
+
     public function findByGameId($idGame)
     {
         return $this->createQueryBuilder('r')

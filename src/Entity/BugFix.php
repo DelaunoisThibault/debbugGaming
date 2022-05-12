@@ -20,7 +20,7 @@ class BugFix
     /**
      * @ORM\Column(type="boolean")
      */
-    private $resolved;
+    private $resolved = false;
 
     /**
      * @ORM\Column(type="integer")

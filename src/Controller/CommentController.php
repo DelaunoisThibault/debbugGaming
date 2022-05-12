@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
-use App\Form\CommentsType;
+use App\Form\CommentFormType;
 use App\Repository\BugRepository;
 use App\Entity\Bug;
 use App\Entity\User;
@@ -30,7 +30,7 @@ class CommentController extends AbstractController
         $comment = $commentRepo->find($id);
         $bug = $bugRepo->find($comment->getIdBug());
 
-        $commentsForm = $this->createForm(CommentsType::class, $comment);
+        $commentsForm = $this->createForm(CommentFormType::class, $comment);
         $commentsForm->handleRequest($request);
 
         if($commentsForm->isSubmitted() && $commentsForm->isValid()){

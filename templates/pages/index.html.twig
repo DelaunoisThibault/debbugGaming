@@ -5,6 +5,9 @@
              <div class="col-lg-12">
                  <div class="top-text header-text">
                      <h2>Debug Gaming</h2>
+                     {% for flashSuccess in app.flashes('success') %}
+                       <div class="alert alert-success" role="alert">{{ flashSuccess }}</div>
+                     {% endfor %}
                      <img class="welcomeImg" src="{{ asset('assets/images/work.png') }}" alt="">
                  </div>
              </div>

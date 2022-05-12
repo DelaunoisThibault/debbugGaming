@@ -75,7 +75,7 @@ class Bug
     /**
      * @ORM\Column(type="boolean")
      */
-    private $published;
+    private $published = false;
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="idBug")

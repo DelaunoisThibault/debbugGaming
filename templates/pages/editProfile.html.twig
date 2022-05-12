@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+{% block content %}
+    <div class="page-heading">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="top-text header-text">
+                        <h2>Modification du Profil</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="inner-content">
+                          <div class="row connectInscript">
+                            {{ form_start(userForm, {'method': 'POST', 'attr':{'id': 'search-form', 'name': 'bugForm', 'class': 'bugForm'}}) }}
+                              {{ form_row(userForm.email, {'label':'Email :', 'attr': {'class': 'inputBugForm'}}) }}
+                              {{ form_row(userForm.pseudonym, {'label':'Pseudonyme :', 'attr': {'class': 'inputBugForm'}}) }}
+                              {{ form_row(userForm.avatar, {'label':'Avatar :', 'attr': {'class': 'inputBugForm'}}) }}
+                                <div class="col-lg-4">
+                                  <button><input type="submit" name="submitBugButton"></button>
+                                </div>
+                                <div class="col-lg-4"></div>
+                                <div class="col-lg-4"></div>
+                            {{ form_end(userForm) }}
+                          </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

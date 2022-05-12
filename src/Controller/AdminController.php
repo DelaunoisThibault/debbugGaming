@@ -28,7 +28,9 @@ use App\Form\AdminBugFixFormType;
 use App\Form\ContactMessageFormType;
 use App\Form\EditorFormType;
 use App\Form\AdminGameFormType;
+use App\Repository\ResetPasswordRequestRepository;
 use GMP;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -720,7 +722,7 @@ class AdminController extends AbstractController
      * @Route("admin/adminUser/update/{id<\d+>}", name="userAdminUpdatePage")
      */
     public function adminUserForm(Request $request, User $user = null, FileUploader $fileUploader, EntityManagerInterface $manager, 
-    UserRepository $userRepo): Response 
+    UserRepository $userRepo, UserPasswordEncoderInterface $passwordEncoder): Response 
     {
         $users = $userRepo->findAll();
         
@@ -738,6 +740,8 @@ class AdminController extends AbstractController
                 $user->setAvatar($imageFileName);
             }
             $user = $userForm->getData();
+            $hash = $passwordEncoder->encodePassword($user, $userForm->get('plainPassword')->getData());
+            $user->setPassword($hash);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -761,13 +765,14 @@ class AdminController extends AbstractController
      * suppression d'un utilisateur dans db
      * @Route("/admin/adminUser/delete/{id<\d+>}", name="adminDeleteUser")
      */
-    public function adminDeleteUser(int $id, UserRepository $userRepo, BugRepository $bugRepo, BugFixRepository $bugFixRepo, BugSolutionRepository $bugSolutionRepo, 
+    public function adminDeleteUser(int $id, UserRepository $userRepo, BugRepository $bugRepo, ResetPasswordRequestRepository $resetPasswordRequestRepo, BugSolutionRepository $bugSolutionRepo, 
     CommentRepository $commentRepo): Response
     {
         $users = $userRepo->findAll();
         $user = $userRepo->find($id);
         $userComments = $commentRepo->findByUserId($user);
         $bugs = $bugRepo->findByUserId($user);
+        $resetPasswordRequests = $resetPasswordRequestRepo->findByUserId($user);
         $entityManager = $this->getDoctrine()->getManager();
 
         if (!$user){
@@ -775,7 +780,6 @@ class AdminController extends AbstractController
                 'No user found for id '.$id
             );
         }
-
         
         foreach ($bugs as $bug){
             $bugSolutions = $bugSolutionRepo->findByBugId($bug);
@@ -834,6 +838,11 @@ class AdminController extends AbstractController
                 $gameRelated->setBugRating(5);
             }
             $entityManager->remove($bug);
+        }
+        foreach($resetPasswordRequests as $resetPasswordRequest){
+            if($resetPasswordRequest){
+                $entityManager->remove($resetPasswordRequest);
+            }
         }
         $entityManager->remove($user);
        

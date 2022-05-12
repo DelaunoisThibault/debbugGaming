@@ -34,7 +34,7 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $hash = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+            $hash = $passwordEncoder->encodePassword($user, $form->get('plainPassword')->getData());
             $user->setPassword($hash);
 
             $user->setRoles(['ROLE_USER'])
@@ -56,12 +56,22 @@ class RegistrationController extends AbstractController
             );
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('homePage');
+            return $this->redirectToRoute('waitingEmailValidation');
         }
 
         return $this->render('pages/inscription.html.twig', [
             'pageTitle' => 'Inscription',
             'registrationForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * page d'attente de validation
+     * @Route("/emailValidation", name="waitingEmailValidation")
+     */
+    public function waitingEmailValidationMessage(){
+        return $this->render('registration/waitingValidationFirstMessage.html.twig', [
+            'pageTitle' => 'En attente de validation par email'
         ]);
     }
 
@@ -84,6 +94,6 @@ class RegistrationController extends AbstractController
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('homePage');
     }
 }

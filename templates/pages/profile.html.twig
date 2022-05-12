@@ -18,19 +18,23 @@
                 <div class="col-lg-12">
                     <div class="inner-content">
                         <div class="row connectInscript">
+                        {% if app.user.isVerified == false %}
+                                <h1>Bienvenue {{ userData.email }}!</h1>
+
+                                <p>Veuillez utiliser le lien reçu en email pour activer votre  compte.</p>
+                                {% else %}
                             <div class="col-lg-4">
-                                <img src="assets/images/user_icon.png" alt="">
-                                <form id="changeProfile-form" name="gs" method="submit" role="search" action="#">
+                                <img src="{{ asset('assets/images/' ~ userData.avatar) }}" alt="">
                                     <fieldset>
-                                        <button class="main-button btn btn-primary">Modifier</button>
+                                        <a href="{{ path('updateUser', {'id': userData.id}) }}"><button class="main-button buttonStyle">Modifier</button></a>
                                     </fieldset>
-                                </form>
                             </div>
                             <div class="col-lg-8">
-                                <p>Nom de compte : Utilisateur</p>
-                                <p>Adresse e-mail : adresse@gmail.com</p>
-                                <p>Bloqué : Non</p>
+                                <p>Nom de compte : {{ userData.pseudonym }}</p>
+                                <p>Adresse e-mail : {{ userData.email }}</p>
+                                <p>Bloqué : {% if userData.locked == false %}Non {% else %} Oui {% endif %}</p>
                             </div>
+                        {% endif %}
                         </div>
                     </div>
                 </div>

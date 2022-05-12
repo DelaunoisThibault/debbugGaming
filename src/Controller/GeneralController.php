@@ -27,7 +27,7 @@ class GeneralController extends AbstractController
      */
     public function home(BugRepository $bugRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $bugs = $bugRepository->findAllByRecent();
+        $bugs = $bugRepository->findAllPublishedByRecent();
         $bugs = $paginator->paginate(
             $bugs,
             $request->query->getInt('page', 1),
@@ -45,7 +45,7 @@ class GeneralController extends AbstractController
      */
     public function bugSearch(BugRepository $bugRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $bugs = $bugRepository->findAllByRecent();
+        $bugs = $bugRepository->findAllPublishedByRecent();
         $bugs = $paginator->paginate(
             $bugs,
             $request->query->getInt('page', 1),

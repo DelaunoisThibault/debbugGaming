@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 class BugController extends AbstractController
 {
@@ -49,6 +50,7 @@ class BugController extends AbstractController
             /** @var \App\Entity\User $user */
             $user = $this->getUser();
             $bug->setIdUser($user);
+            $bug->setPublished(false);
 
             $gameRelated = $bug->getIdGame();
             $allBugsFromGame = $bugRepository->findByGameId($gameRelated);
@@ -104,7 +106,7 @@ class BugController extends AbstractController
      * suppression de bug 
      * @Route("/bug/delete/{id<\d+>}", name="deleteBug")
      */
-    public function deleteBug(int $id, BugRepository $bugRepo, BugFixRepository $bugFixRepo, BugSolutionRepository $bugSolutionRepo, CommentRepository $commentRepo): Response
+    public function deleteBug(int $id, BugRepository $bugRepo, PaginatorInterface $paginator, Request $request, BugSolutionRepository $bugSolutionRepo, CommentRepository $commentRepo): Response
     {
         $bugs = $bugRepo->findAllByRecent();
         $bug = $bugRepo->find($id);
@@ -112,6 +114,11 @@ class BugController extends AbstractController
         $bugFix = $bug->getIdBugFix();
         $comments = $commentRepo->findByBugId($bug);
         $entityManager = $this->getDoctrine()->getManager();
+        $bugs = $paginator->paginate(
+            $bugs,
+            $request->query->getInt('page', 1),
+            3
+        );
 
         if (!$bug){
             throw $this->createNotFoundException(
@@ -170,7 +177,7 @@ class BugController extends AbstractController
         $entityManager->flush();
         
 
-        return $this->render('pages/index.html.twig', [
+        return $this->redirectToRoute('homePage', [
             'pageTitle' => 'Accueil',
             'listBugs' => $bugs
         ]);
