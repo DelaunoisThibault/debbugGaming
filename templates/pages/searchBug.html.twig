@@ -34,6 +34,17 @@
                                                 <div class="top-content">
                                                     <div class="row">
                                                         <div class="col-lg-12">
+                                                        {{ form_start(searchBugForm)}}
+                                                        {{ form_row(searchBugForm.descriptionTextBug) }}
+                                                        <fieldset>
+                                                          <button class="main-button searchBugFormButton"><i class="fa fa-search"></i> Valider</button>
+                                                        </fieldset>
+                                                        {{ form_row(searchBugForm.severityBug) }}
+                                                        {{ form_row(searchBugForm.frequencyBug) }}
+                                                        {{ form_row(searchBugForm.idGame) }}
+                                                        {{ form_row(searchBugForm.idBugFix) }}
+                                                        
+                                                        {{ form_end(searchBugForm) }}
 
                                                             <form id="search-form" name="gs" method="submit" role="search" action="#">
                                                                 <div class="row searchFormPage searchFormSpaces">
@@ -107,6 +118,28 @@
                                             <div class="general-info">
                                                 <div class="item">
                                                     <div class="row">
+                                                    {% if app.request.method == 'POST' %}
+                                                        {% if listBugs | length == 0 %}
+                                                          <h4>Aucun résulat pour votre recherche.</h4>
+                                                        {% else %}
+                                                          {% for listBugs in listBugs %}
+                                                            <div class="col-lg-4">
+                                                                <div class="listing-item">
+                                                                    <div class="left-image">
+                                                                        <a href="{{ path('bugPage', {'id': listBugs.id}) }}"><img src="{{ asset('assets/images/' ~listBugs.descriptionImgBug ) }}" alt=""></a>
+                                                                    </div>
+                                                                    <div class="right-content align-self-center">
+                                                                        <a href="{{ path('bugPage', {'id': listBugs.id}) }}">
+                                                                            <h4>{{ listBugs.titleBug }}</h4>
+                                                                        </a>
+                                                                        <p>{{ listBugs.smallTextBug }}</p>
+                                                                        <h6>{{ listBugs.subtitleBug }}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                          {% endfor %}
+                                                        {% endif %}
+                                                    {% else %}
                                                         {% for listBugs in listBugs %}
                                                             <div class="col-lg-4">
                                                                 <div class="listing-item">
@@ -123,8 +156,7 @@
                                                                 </div>
                                                             </div>
                                                         {% endfor %}
-
-
+                                                    {% endif %}
                                                     </div>
                                                 </div>
 

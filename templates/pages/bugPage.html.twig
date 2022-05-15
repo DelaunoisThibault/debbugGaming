@@ -188,6 +188,8 @@
       {% for comment in comments %}
         <div class="col-lg-2">
          <img src="{{ asset('assets/images/' ~ comment.idUser.avatar) }}" alt="">
+         <h5>{{ comment.idUser.pseudonym }}</h5>
+         <p>Le {{ comment.date | date("d/m/Y") }} à {{ comment.date | date('H:i') }}</p>
         </div>
         <div class="col-lg-10">
          <p>{{ comment.textComments }}</p>

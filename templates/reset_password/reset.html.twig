@@ -23,8 +23,8 @@
         <div class="row">
         <h1>Reset your password</h1>
 
-    {{ form_start(resetForm, {'method': 'POST', 'attr':{'id': 'search-form', 'name': 'resetPasswordForm', 'class': 'bugForm'}}) }}
-        {{ form_row(resetForm.plainPassword, {'attr': {'class': 'inputBugForm'} }) }}
+    {{ form_start(resetForm, {'method': 'POST', 'attr':{'id': 'search-form', 'name': 'resetForm', 'class': 'commentForm'}}) }}
+        {{ form_row(resetForm.plainPassword) }}
         <div class="col-lg-4"><button class="main-button buttonStyle">Reset password</button></div>
         <div class="col-lg-4"></div>
         <div class="col-lg-4"></div>

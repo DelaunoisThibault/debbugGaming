@@ -58,22 +58,11 @@
                                         {% endif %}
                                         <li>
                                             <div class="navSearchBar col-lg-12">
-                                                <form id="search-form" class="navSearchForm" name="gs" method="POST" role="search" action="#">
+                                                <!-- <form id="search-form" class="navSearchForm" name="gs" method="POST" role="search" action="#"> -->
                                                     <div class="row">
-
-                                                        <div class="col-lg-8 align-self-center">
-                                                            <fieldset>
-                                                                <input type="text" name="navSearchForm" class="searchText" placeholder="Rechercher..." autocomplete="on" required>
-                                                            </fieldset>
-                                                        </div>
-
-                                                        <div class="col-lg-4">
-                                                            <fieldset>
-                                                                <button class="main-button headerSearchBarButton"><i class="fas fa-search navIconSearchBar"></i></button>
-                                                            </fieldset>
-                                                        </div>
+                                                      {{ render(controller('App\\Controller\\SearchNavController::searchBar')) }}
                                                     </div>
-                                                </form>
+                                               <!--  </form> -->
                                             </div>
                                         </li>
                                         {% if not app.user %}

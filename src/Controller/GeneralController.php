@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Bug;
 use App\Entity\ContactMessage;
 use App\Form\CommentFormType;
 use App\Form\ContactMessageFormType;
+use App\Form\SearchFormType;
 use App\Repository\BugRepository;
 use App\Repository\BugFixRepository;
 use App\Repository\BugSolutionRepository;
@@ -45,7 +47,19 @@ class GeneralController extends AbstractController
      */
     public function bugSearch(BugRepository $bugRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $searchBugData = new Bug();
+        $bugSearchForm = $this->createForm(SearchFormType::class, $searchBugData);
+        $bugSearchForm->handleRequest($request);
         $bugs = $bugRepository->findAllPublishedByRecent();
+        if($bugSearchForm->isSubmitted() && $bugSearchForm->isValid()){
+            $bugs = $bugRepository->searchDatas($searchBugData);
+
+            if ($bugs == null) {
+                $this->addFlash('erreur', 'Aucun article contenant ce mot clé dans le titre n\'a été trouvé, essayez en un autre.');
+
+            }
+        }
+
         $bugs = $paginator->paginate(
             $bugs,
             $request->query->getInt('page', 1),
@@ -53,7 +67,8 @@ class GeneralController extends AbstractController
         );
         return $this->render('pages/searchBug.html.twig', [
             'pageTitle' => 'Rechercher un bug',
-            'listBugs' => $bugs
+            'listBugs' => $bugs,
+            'searchBugForm' => $bugSearchForm->createView()
         ]);
     }
 

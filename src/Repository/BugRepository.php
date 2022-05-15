@@ -62,6 +62,98 @@ class BugRepository extends ServiceEntityRepository
             ;
     }
 
+    public function findBugsByTitleOrDescription(string $query)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->where(
+                $qb->expr()->andX(
+                    $qb->expr()->orX(
+                        $qb->expr()->like('p.titleBug', ':query'),
+                        $qb->expr()->like('p.descriptionTextBug', ':query'),
+                    ),
+                )
+            )
+            ->andWhere('p.published = true')
+            ->orderBy('p.id', 'DESC')
+            ->setParameter('query', '%' . $query . '%')
+        ;
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return \Doctrine\ORM\Query
+     */
+    public function searchDatas(Bug $searchBugs) {
+        $query = $this->createQueryBuilder('a');
+
+        if(!empty($searchBugs->getDescriptionTextBug())){
+            $query = $query
+                ->andWhere('a.descriptionTextBug LIKE :descriptionTextBug')
+                ->setParameter('descriptionTextBug', '%'.$searchBugs->getDescriptionTextBug().'%');
+        }
+        if(!empty($searchBugs->getFrequencyBug())){
+            $query = $query
+                ->andWhere('a.frequencyBug LIKE :frequencyBug')
+                ->setParameter('frequencyBug', '%'.$searchBugs->getFrequencyBug().'%');
+        }
+        if(!empty($searchBugs->getSeverityBug())){
+            $query = $query
+                ->andWhere('a.severityBug LIKE :severityBug')
+                ->setParameter('severityBug', '%'.$searchBugs->getSeverityBug().'%');
+        }
+        if(!empty($searchBugs->getIdGame())){
+            $query = $query
+                ->andWhere('a.idGame LIKE :idGame')
+                ->setParameter('idGame', '%'.$searchBugs->getIdGame().'%');
+        }
+        if(!empty($searchBugs->getIdBugFix())){
+            $query = $query
+                ->andWhere('a.idBugFix.resolved LIKE :idBugFix.resolved')
+                ->setParameter('a.idBugFix.resolved', $searchBugs->getIdBugFix());
+        }
+        return $query->getQuery()->execute();
+    }
+
+    /**
+     * @return Bug|null
+     * @param string $value
+     * @param $severityBug
+     * @param $frequencyBug
+     * @param $idGame
+     * @param $idBugFix
+     * @throws \Exception
+     */
+    public function findBySearch(string $value, $severityBug, $frequencyBug, $idGame, $idBugFix)
+
+    {
+        $query = $this->createQueryBuilder('a')
+        ->addSelect('a')
+        ->where('a.severityBug = :severityBug')
+        ->andWhere('a.frequencyBug = :frequencyBug')
+        ->andWhere('a.idGame = :idGame')
+        ->andWhere('a.idBugFix = :idBugFix')
+        ->andWhere('a.published = true')
+        ->andWhere('a.titleBug LIKE :value')
+        ->orWhere('a.descriptionTextBug LIKE :value')
+        ->orderBy('a.id', 'DESC')
+        ->setParameter(':value', $value)
+        ->setParameter(':severityBug', $severityBug)
+        ->setParameter(':frequencyBug', $frequencyBug)
+        ->setParameter(':idGame', $idGame)
+        ->setParameter(':idBugFix', $idBugFix)
+        ->getQuery();
+
+        try {
+            return $query->getResult();
+        }
+        catch(\Exception $e) {
+            throw new \Exception('problème '. $e->getMessage(). $e->getFile());
+        }
+    }
+
     // /**
     //  * @return Bug[] Returns an array of Bug objects
     //  */

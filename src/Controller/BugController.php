@@ -36,6 +36,7 @@ class BugController extends AbstractController
             $bug = new Bug();
         }
         $bugForm = $this->createForm(BugFormType::class, $bug);
+        $bugs = $bugRepository->findAllByRecent();
 
         $bugForm->handleRequest($request);
         if(($bugForm->isSubmitted() && $bugForm->isValid())){
@@ -50,7 +51,12 @@ class BugController extends AbstractController
             /** @var \App\Entity\User $user */
             $user = $this->getUser();
             $bug->setIdUser($user);
-            $bug->setPublished(false);
+            $userRole = $user->getRoles();
+            if($userRole == ['ROLE_USER']){
+                $bug->setPublished(false);
+            } else {
+                $bug->setPublished(true);
+            }
 
             $gameRelated = $bug->getIdGame();
             $allBugsFromGame = $bugRepository->findByGameId($gameRelated);
@@ -91,9 +97,18 @@ class BugController extends AbstractController
             $entityManager->persist($bug);
             $entityManager->flush();
 
-            return $this->redirectToRoute('bugPage', [
-                'id' => $bug->getId()
-            ]);
+            $bugIsPublished = $bug->getPublished();
+            if($bugIsPublished == true){
+                return $this->redirectToRoute('bugPage', [
+                    'id' => $bug->getId()
+                ]);
+            } else {
+                return $this->redirectToRoute('homePage', [
+                    'pageTitle' => 'Accueil',
+                    'listBugs' => $bugs
+                ]);
+            }
+            
         }
 
         return $this->render('pages/creationBug.html.twig', [
