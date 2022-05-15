@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Bug;
+use App\Entity\Game;
+use App\Entity\BugFix;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -87,7 +89,10 @@ class BugRepository extends ServiceEntityRepository
      * @return \Doctrine\ORM\Query
      */
     public function searchDatas(Bug $searchBugs) {
-        $query = $this->createQueryBuilder('a');
+        $query = $this->createQueryBuilder('a')
+        ->select('a', 'b', 'g')
+        ->join('a.idGame', 'g')
+        ->join('a.idBugFix', 'b');
 
         if(!empty($searchBugs->getDescriptionTextBug())){
             $query = $query
@@ -106,13 +111,13 @@ class BugRepository extends ServiceEntityRepository
         }
         if(!empty($searchBugs->getIdGame())){
             $query = $query
-                ->andWhere('a.idGame LIKE :idGame')
-                ->setParameter('idGame', '%'.$searchBugs->getIdGame().'%');
+                ->andWhere('g.id IN (:idGame)')
+                ->setParameter('idGame', $searchBugs->getIdGame());
         }
         if(!empty($searchBugs->getIdBugFix())){
             $query = $query
-                ->andWhere('a.idBugFix.resolved LIKE :idBugFix.resolved')
-                ->setParameter('a.idBugFix.resolved', $searchBugs->getIdBugFix());
+                ->andWhere('b.id IN (:idBugFix)')
+                ->setParameter('idBugFix', $searchBugs->getIdBugFix());
         }
         return $query->getQuery()->execute();
     }

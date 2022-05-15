@@ -34,79 +34,43 @@
                                                 <div class="top-content">
                                                     <div class="row">
                                                         <div class="col-lg-12">
-                                                        {{ form_start(searchBugForm)}}
-                                                        {{ form_row(searchBugForm.descriptionTextBug) }}
-                                                        <fieldset>
-                                                          <button class="main-button searchBugFormButton"><i class="fa fa-search"></i> Valider</button>
-                                                        </fieldset>
-                                                        {{ form_row(searchBugForm.severityBug) }}
-                                                        {{ form_row(searchBugForm.frequencyBug) }}
-                                                        {{ form_row(searchBugForm.idGame) }}
-                                                        {{ form_row(searchBugForm.idBugFix) }}
-                                                        
+                                                        {{ form_start(searchBugForm, {'method': 'GET', 'attr':{'id': 'search-form', 'name': 'gs', 'role':'search'}})}}
+                                                          <div class="row searchFormPage searchFormSpaces">
+                                                            <div class="col-lg-9 align-self-center">
+                                                              <fieldset>
+                                                                {{ form_row(searchBugForm.descriptionTextBug, {'placeholder': 'Rechercher...', 'name': 'Rechercher...' , 'attr': {'class': 'searchText'} }) }}
+                                                              </fieldset>
+                                                            </div>
+                                                            <div class="col-lg-3 arrangedBoxButtonSearchBug">
+                                                              <fieldset>
+                                                                <button class="main-button searchBugFormButton"><i class="fa fa-search"></i> Valider</button>
+                                                              </fieldset>
+                                                            </div>
+                                                          </div>
+                                                          <div class="row">
+                                                                <div class="col-lg-1">
+                                                                    <h4>Filtrer :</h4>
+                                                                </div>
+                                                                <div class="col-lg-3 searchFormPage">
+                                                                    <fieldset>
+                                                                        {{ form_row(searchBugForm.severityBug, {'label':'Sévérité du bug :', 'attr': {'id': 'severity', 'name': 'severity','class': 'searchFormPage'}}) }}
+                                                                    </fieldset>
+                                                                </div>
+                                                                <div class="col-lg-3 searchFormPage">
+                                                                    <fieldset>
+                                                                        {{ form_row(searchBugForm.frequencyBug, {'label':'Fréquence du bug :', 'attr': {'id': 'frequency', 'name': 'frequency','class': 'searchFormPage'}}) }}
+                                                                    </fieldset>
+                                                                </div>
+                                                                <div class="col-lg-3 searchFormPage">
+                                                                    <fieldset>
+                                                                        {{ form_row(searchBugForm.idGame, {'label':'Jeu :', 'attr': {'id': 'gameBug', 'name': 'gameBug', 'class': 'searchFormPage'}}) }}
+                                                                    </fieldset>
+                                                                </div>
+                                                                <div class="col-lg-2">
+                                                                    {{ form_row(searchBugForm.idBugFix, {'label': 'Bug résolu ?', 'attr': {'id': 'solved', 'name': 'solved', 'class': 'inputBugForm'} }) }}
+                                                                </div>
+                                                          </div>
                                                         {{ form_end(searchBugForm) }}
-
-                                                            <form id="search-form" name="gs" method="submit" role="search" action="#">
-                                                                <div class="row searchFormPage searchFormSpaces">
-
-                                                                    <div class="col-lg-9 align-self-center">
-                                                                        <fieldset>
-                                                                            <input type="address" name="address" class="searchText" placeholder="Entrer votre recherche ici..." autocomplete="on" required>
-                                                                        </fieldset>
-                                                                    </div>
-
-                                                                    <div class="col-lg-3 arrangedBoxButtonSearchBug">
-                                                                        <fieldset>
-                                                                            <button class="main-button searchBugFormButton"><i class="fa fa-search"></i> Valider</button>
-                                                                        </fieldset>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-lg-1">
-                                                                        <h4>Filtrer :</h4>
-                                                                    </div>
-                                                                    <div class="col-lg-3 searchFormPage">
-                                                                        <fieldset>
-                                                                            <label for="severity">Sévérité :</label><br />
-                                                                            <select class="searchFormPage" name="severity" id="severity">
-                                                                                <option value="insignificant">Insignifiant</option>
-                                                                                <option value="small">Faible</option>
-                                                                                <option value="moderate">Modéré</option>
-                                                                                <option value ="strong">Fort</option>
-                                                                                <option value ="deadly/heavy">Jeux condamné/lourdement impacté</option>
-                                                                            </select>
-                                                                        </fieldset>
-                                                                    </div>
-                                                                    <div class="col-lg-3 searchFormPage">
-                                                                        <fieldset>
-                                                                            <label for="frequency">Fréquence :</label><br />
-                                                                            <select class="searchFormPage" name="frequency" id="frequency">
-                                                                                <option value="exceptionnal">Exceptionnel</option>
-                                                                                <option value="rare">Rare</option>
-                                                                                <option value="sometimes">Peu courant</option>
-                                                                                <option value ="often">Assez régulier</option>
-                                                                                <option value ="regulary">Fréquent</option>
-                                                                                <option value ="always">Systématique</option>
-                                                                            </select>
-                                                                        </fieldset>
-                                                                    </div>
-                                                                    <div class="col-lg-3 searchFormPage">
-                                                                        <fieldset>
-                                                                            <label for="gameBug">Jeu :</label><br />
-                                                                            <select class="searchFormPage" name="gameBug" id="gameBug">
-                                                                                <option value="skyrim">Skyrim</option>
-                                                                                <option value="AssassinsCreed3">Assassins Creed 3</option>
-                                                                                <option value="Fifa21">Fifa 2021</option>
-                                                                            </select>
-                                                                        </fieldset>
-                                                                    </div>
-                                                                    <div class="col-lg-2">
-                                                                        <input type="checkbox" id="solved" name="solved">
-                                                                        <label for="solved">Résolu ?</label>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-
                                                         </div>
                                                     </div>
                                                 </div>

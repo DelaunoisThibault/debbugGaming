@@ -17,7 +17,9 @@ class SearchFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('descriptionTextBug', TextType::class)
+            ->add('descriptionTextBug', TextType::class, [
+                'required' => false
+            ])
             ->add('severityBug', ChoiceType::class, [
                 'required' => false,
                 'choices' => [

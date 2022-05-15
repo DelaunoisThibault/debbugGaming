@@ -89,6 +89,7 @@ class Bug
 
     /**
      * @ORM\OneToOne(targetEntity=BugFix::class, inversedBy="bugId", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $idBugFix;
 
