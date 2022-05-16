@@ -1,12 +1,14 @@
 {{ form_start(searchForm, {'method': 'POST', 'attr':{'id': 'search-form', 'name': 'gs', 'role':'search', 'class': 'navSearchForm'}}) }}
-    <div class="col-lg-8 align-self-center">
+<div class="row">
+    <div class="col-lg-8 align-self-center navSearchFormPosition">
         <fieldset>
             {{ form_row(searchForm.query, {'placeholder': 'Rechercher...', 'name': 'navSearchForm' , 'attr': {'class': 'searchText'} }) }}
         </fieldset>
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-4 navSearchFormPosition">
         <fieldset>
             <button class="main-button headerSearchBarButton"><i class="fas fa-search navIconSearchBar"></i></button>
         </fieldset>
     </div> 
+</div>
 {{ form_end(searchForm) }}

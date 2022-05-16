@@ -58,11 +58,7 @@
                                         {% endif %}
                                         <li>
                                             <div class="navSearchBar col-lg-12">
-                                                <!-- <form id="search-form" class="navSearchForm" name="gs" method="POST" role="search" action="#"> -->
-                                                    <div class="row">
-                                                      {{ render(controller('App\\Controller\\SearchNavController::searchBar')) }}
-                                                    </div>
-                                               <!--  </form> -->
+                                                {{ render(controller('App\\Controller\\SearchNavController::searchBar')) }}
                                             </div>
                                         </li>
                                         {% if not app.user %}

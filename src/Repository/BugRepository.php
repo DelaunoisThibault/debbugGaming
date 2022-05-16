@@ -114,11 +114,6 @@ class BugRepository extends ServiceEntityRepository
                 ->andWhere('g.id IN (:idGame)')
                 ->setParameter('idGame', $searchBugs->getIdGame());
         }
-        if(!empty($searchBugs->getIdBugFix())){
-            $query = $query
-                ->andWhere('b.id IN (:idBugFix)')
-                ->setParameter('idBugFix', $searchBugs->getIdBugFix());
-        }
         return $query->getQuery()->execute();
     }
 

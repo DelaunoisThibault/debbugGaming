@@ -1036,6 +1036,10 @@ form#search-form button i {
     margin-right: 10px;
 }
 
+.navSearchFormPosition{
+    margin-right : 0;
+}
+
 button a {
     color : #fff;
 }

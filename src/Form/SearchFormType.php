@@ -50,9 +50,6 @@ class SearchFormType extends AbstractType
                 'class' => Game::class,
                 'choice_label' => 'nameGame'
             ])
-            ->add('idBugFix', SearchBugWithBugFixFormType::class, [
-                'required' => false
-            ])
         ;
     }
 

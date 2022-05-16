@@ -725,7 +725,6 @@ class AdminController extends AbstractController
     UserRepository $userRepo, UserPasswordEncoderInterface $passwordEncoder): Response 
     {
         $users = $userRepo->findAll();
-        
         if(!$user){
             $user = new User();
         }
@@ -752,8 +751,6 @@ class AdminController extends AbstractController
                 'users' => $users
             ]);
         }
-
-        
 
         return $this->render('admin/adminUser.html.twig', [
             'pageTitle' => 'Créer/mettre à jour un utilisateur',
